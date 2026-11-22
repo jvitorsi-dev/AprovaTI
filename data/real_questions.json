@@ -1142,5 +1142,77 @@
     "validation": "Enunciado e origem conferidos em fonte secundária; resposta técnica ou comentada. Gabarito oficial definitivo não confirmado.",
     "collected": "2026-11-22",
     "edital_basis": "Anexo III, Sistemas: Padrões de Projeto"
+  },
+  {
+    "topic": "Metodologias de Desenvolvimento de Sistemas",
+    "subtopic": "UML 2.5.1",
+    "prompt": "O diagrama de casos de uso da UML tenta representar o sistema por intermédio de uma perspectiva do usuário, utilizando uma linguagem simples. Nesse tipo de diagrama",
+    "options": [
+      "o objetivo principal é representar a forma como as funcionalidades do sistema serão implementadas.",
+      "os sistemas legados externos são representados como casos de uso estendidos.",
+      "são representados principalmente os requisitos não funcionais e as interações envolvendo estes requisitos.",
+      "os casos de uso são representados por retângulos e os atores, por bonecos magros.",
+      "as associações de extensão são utilizadas para descrever cenários opcionais de um caso de uso."
+    ],
+    "answer": 4,
+    "explanation": "A relação extend descreve comportamento adicional inserido no caso de uso base sob certas condições; não se trata de detalhar implementação. A questão trata de conceito geral de UML, sem especificar versão.",
+    "kind": "REAL — FCC",
+    "board": "FCC",
+    "year": 2015,
+    "origin": "DPE-RR",
+    "role": "Analista de Sistemas",
+    "source": "https://www.qconcursos.com/questoes-de-concursos/questoes/256f2211-b5",
+    "difficulty": "Intermediária",
+    "validation": "Enunciado e origem conferidos em fonte secundária; resposta verificada tecnicamente. Gabarito definitivo original não localizado.",
+    "collected": "2026-11-22",
+    "edital_basis": "Anexo III, Sistemas: UML 2.5.1"
+  },
+  {
+    "topic": "Linguagens e Técnicas de Programação",
+    "subtopic": "Listas e pilhas",
+    "prompt": "Considerando as estruturas de dados pilhas e filas, é correto afirmar que:",
+    "options": [
+      "a política de atendimento aos jobs por um único processador em tempo compartilhado, implementada por fila circular, seria adequada para controlar a fila de arquivos a serem impressos numa impressora.",
+      "uma pilha é conhecida como lista FIFO - First In First Out e uma fila é conhecida como lista LIFO - Last In First Out. Pessoas esperando por atendimento e pratos empilhados em uma mesa de restaurante são exemplos tipicamente associados a estas estruturas.",
+      "as filas são as estruturas mais adequadas para a recuperação de elementos na ordem inversa em que foram inseridos, já que o último elemento inserido é o primeiro a ser retirado.",
+      "a pilha (stack) é usada pelo Sistema Operacional para armazenar informações sobre as subrotinas ativas num programa de computador. Quem invoca a subrotina empilha o endereço de retorno; quando termina sua execução, a subrotina invocada desempilha o endereço de retorno.",
+      "tanto a pilha quanto a fila são controladas por apenas 4 operações básicas: verifica se a estrutura está vazia, insere um elemento na estrutura, retira um elemento da estrutura e obtém todos os elementos da estrutura em ordem crescente ou decrescente."
+    ],
+    "answer": 3,
+    "explanation": "Uma pilha de chamadas pode armazenar informações de subrotinas e endereços de retorno. A ordem LIFO caracteriza pilhas, enquanto filas convencionais usam FIFO.",
+    "kind": "REAL — FCC",
+    "board": "FCC",
+    "year": 2014,
+    "origin": "AL-PE",
+    "role": "Analista Legislativo - Sistemas",
+    "source": "https://www.qconcursos.com/questoes-de-concursos/questoes/130a923b-ca",
+    "difficulty": "Intermediária",
+    "validation": "Enunciado e origem conferidos em fonte secundária; resposta verificada tecnicamente. Gabarito definitivo original não localizado.",
+    "collected": "2026-11-22",
+    "edital_basis": "Anexo III, Sistemas: Listas e pilhas"
+  },
+  {
+    "topic": "Bancos de Dados",
+    "subtopic": "Data Mining",
+    "prompt": "Em relação às ferramentas de Data Discovery e os fundamentos de Data Mining, é correto afirmar:",
+    "options": [
+      "As ferramentas de Data Mining permitem ao usuário avaliar tendências e padrões não conhecidos entre os dados. Esses tipos de ferramentas podem utilizar técnicas avançadas de computação como redes neurais, algoritmos genéticos e lógica nebulosa, dentre outras.",
+      "Data Mining é o processo de descobrir conhecimento em banco de dados, que envolve várias etapas. O KDD – Knowledge Discovery in Database é uma destas etapas, portanto, a mineração de dados é um conceito que abrange o KDD.",
+      "A etapa de KDD do Data Mining consiste em aplicar técnicas que auxiliem na busca de relações entre os dados. De forma geral, existem três tipos de técnicas: Estatísticas, Exploratórias e Intuitivas. Todas são devidamente experimentadas e validadas para o processo de mineração.",
+      "Os dados podem ser não estruturados (bancos de dados, CRM, ERP), estruturados (texto, documentos, arquivos, mídias sociais, cloud) ou uma mistura de ambos (emails, SOA/web services, RSS). As ferramentas de Data Discovery mais completas possuem conectividade para todas essas origens de dados de forma segura e controlada.",
+      "Estima-se que, atualmente, em média, 80% de todos os dados disponíveis são do tipo estruturado. Existem diversas ferramentas open source e comerciais de Data Discovery. Dentre as open source está a InfoSphere Data Explorer e entre as comerciais está a Vivisimo da IBM."
+    ],
+    "answer": 0,
+    "explanation": "Mineração busca padrões e pode empregar várias técnicas; KDD é o processo mais amplo de descoberta de conhecimento, e não uma etapa subordinada ao data mining.",
+    "kind": "REAL — FCC",
+    "board": "FCC",
+    "year": 2015,
+    "origin": "CNMP",
+    "role": "Analista do CNMP - Tecnologia de Informação e Comunicação Desenvolvimento de Sistemas",
+    "source": "https://www.qconcursos.com/questoes-de-concursos/questoes/af65e596-ce",
+    "difficulty": "Intermediária",
+    "validation": "Enunciado e origem conferidos em fonte secundária; resposta verificada tecnicamente. Gabarito definitivo original não localizado.",
+    "collected": "2026-11-22",
+    "edital_basis": "Anexo III, Sistemas: Data Mining"
   }
 ]
