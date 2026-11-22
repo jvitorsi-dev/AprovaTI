@@ -22,8 +22,8 @@ class IntegrationTests(unittest.TestCase):
   request=urllib.request.Request(self.base+path, data=json.dumps(body).encode() if body is not None else None,headers={'Content-Type':'application/json'})
   with urllib.request.urlopen(request) as response: return json.load(response)
  def test_a_seed_and_reinitialize(self):
-  before=self.request('/api/data')['stats']; self.assertEqual(before['total'],25); self.assertEqual(before['kinds']['REAL — FCC'],15)
-  server.init(); self.assertEqual(self.request('/api/data')['stats']['total'],25)
+  before=self.request('/api/data')['stats']; self.assertEqual(before['total'],29); self.assertEqual(before['kinds']['REAL — FCC'],16)
+  server.init(); self.assertEqual(self.request('/api/data')['stats']['total'],29)
  def test_b_notes_persist(self):
   note=self.request('/api/notes',{'title':'Resumo','body':'conteúdo','topic':'Docker'})
   self.request('/api/notes',{'id':note['id'],'title':'Atualizado','body':'exemplo','topic':'Docker'})
@@ -172,7 +172,7 @@ class MojibakeMigrationTests(unittest.TestCase):
     self.assertEqual(json.loads(c.execute('SELECT options FROM questions WHERE id=?',(other['id'],)).fetchone()[0]), options)
     self.assertEqual(c.execute('SELECT body FROM notes WHERE id=?',(note,)).fetchone()[0],'Não modificar Ã©')
     self.assertEqual(c.execute('SELECT choice FROM answers WHERE exam_id=? AND question_id=?',(exam,q['id'])).fetchone()[0],2)
-    self.assertEqual(c.execute('SELECT count(*) FROM questions').fetchone()[0],25)
+    self.assertEqual(c.execute('SELECT count(*) FROM questions').fetchone()[0],29)
     c.close()
   finally:
    server.DB = previous

@@ -71,3 +71,8 @@
 
 - Acrescentadas ainda questões FCC sobre pilhas (MPE-AP 2012, [Q251345](https://www.qconcursos.com/questoes-de-concursos/questoes/c7d336fd-e5)) e contêineres ([Q1965267](https://www.qconcursos.com/questoes-de-concursos/questoes/b2e68d96-3a)); respostas conferidas tecnicamente, sem localização de gabarito original definitivo.
 - A questão 30 de APF do TRF-3 2019 foi excluída por divergência entre gabarito divulgado e correção independente; requer confirmação do caderno, gabarito definitivo e eventuais recursos. A questão [Q13900](https://www.qconcursos.com/questoes-de-concursos/questoes/e0bfdde0-07) foi descartada por ambiguidade no enunciado relativo a JOIN.
+
+## Continuação da coleta
+
+- Incluídas [Q1965284](https://www.qconcursos.com/questoes-de-concursos/questoes/b31b8eab-3a) (FCC, JSON), [Q892479](https://www.qconcursos.com/questoes-de-concursos/questoes/91f6bb62-57) (CESGRANRIO, JSON/JavaScript), [Q491591](https://www.qconcursos.com/questoes-de-concursos/questoes/5f53385f-d6) (CESGRANRIO, ordenação) e [Q1990150](https://www.qconcursos.com/questoes-de-concursos/questoes/7f08c6ea-6f) (CEBRASPE, JSON). Origens e alternativas consultadas em fonte secundária, respostas verificadas tecnicamente; gabaritos originais definitivos não confirmados.
+- Total: 29 questões (16 FCC, 5 de outras bancas e 8 inéditas). A cobertura ainda não é integral e a coleta não é exaustiva.

@@ -398,5 +398,101 @@
     "validation": "Enunciado e origem verificados no repositório; alternativa E conferida tecnicamente. Gabarito definitivo original não localizado.",
     "collected": "2026-11-22",
     "edital_basis": "Anexo III, Sistemas, DevOps: Contêineres (Docker) e Kubernetes. Swarm e Desktop são aplicações complementares, não termos literais do edital."
+  },
+  {
+    "topic": "Serviços Web",
+    "subtopic": "JSON",
+    "prompt": "Em JSON, os valores podem ser dos tipos de dados: string, number, object (JSON object), boolean,",
+    "options": [
+      "null ou undefined.",
+      "array ou null.",
+      "function ou date.",
+      "date ou array.",
+      "boolean, array ou undefined."
+    ],
+    "answer": 1,
+    "explanation": "Além de string, number, object e boolean, JSON admite array e null. Undefined, function e date não são tipos JSON.",
+    "kind": "REAL — FCC",
+    "board": "FCC",
+    "year": 2022,
+    "origin": "TRT - 22ª Região (PI)",
+    "role": "Técnico Judiciário - Tecnologia da Informação",
+    "source": "https://www.qconcursos.com/questoes-de-concursos/questoes/b31b8eab-3a",
+    "difficulty": "Intermediária",
+    "validation": "Enunciado e origem conferidos em fonte secundária; resposta verificada tecnicamente. Gabarito definitivo original não localizado.",
+    "collected": "2026-11-22",
+    "edital_basis": "Anexo III, Sistemas, Serviços web: JSON."
+  },
+  {
+    "topic": "Serviços Web",
+    "subtopic": "JSON",
+    "prompt": "Um desenvolvedor Web precisa transformar em JSON a seguinte variável, em um programa JavaScript:\n\nvar d1 = { \"nome\":\"Ana Anacleto\", \"idade\":31 };\n\nQual fragmento de código faz isso corretamente?",
+    "options": [
+      "var d2 = d1.stringfy(d1)",
+      "var d2 = d1.parse()",
+      "var d2 = JSON.stringify(d1);",
+      "var d2 = JSON.parse(dados);",
+      "var d2 = d1.toJSON();"
+    ],
+    "answer": 2,
+    "explanation": "JSON.stringify serializa o objeto; JSON.parse realiza a conversão inversa de texto JSON para valor JavaScript.",
+    "kind": "REAL — OUTRA BANCA",
+    "board": "CESGRANRIO",
+    "year": 2018,
+    "origin": "Banco do Brasil",
+    "role": "Escriturário",
+    "source": "https://www.qconcursos.com/questoes-de-concursos/questoes/91f6bb62-57",
+    "difficulty": "Intermediária",
+    "validation": "Enunciado e origem conferidos em fonte secundária; resposta verificada tecnicamente. Gabarito definitivo original não localizado.",
+    "collected": "2026-11-22",
+    "edital_basis": "Anexo III, Sistemas: JSON e JavaScript."
+  },
+  {
+    "topic": "Linguagens e Técnicas de Programação",
+    "subtopic": "Métodos de ordenação",
+    "prompt": "O algoritmo de ordenação de pior complexidade temporal no caso médio, dentre os que se seguem, é",
+    "options": [
+      "Merge sort.",
+      "Bubble sort.",
+      "Heapsort.",
+      "Quicksort.",
+      "Binary tree sort."
+    ],
+    "answer": 1,
+    "explanation": "Na análise usual de caso médio, Bubble sort tem tempo quadrático, enquanto os demais algoritmos listados têm comportamento médio O(n log n) nas condições habituais.",
+    "kind": "REAL — OUTRA BANCA",
+    "board": "CESGRANRIO",
+    "year": 2010,
+    "origin": "Petrobras",
+    "role": "Analista de Sistemas Júnior - Engenharia de Software",
+    "source": "https://www.qconcursos.com/questoes-de-concursos/questoes/5f53385f-d6",
+    "difficulty": "Intermediária",
+    "validation": "Enunciado e origem conferidos em fonte secundária; resposta verificada tecnicamente. Gabarito definitivo original não localizado.",
+    "collected": "2026-11-22",
+    "edital_basis": "Anexo III, Sistemas: Métodos de ordenação e complexidade de algoritmos."
+  },
+  {
+    "topic": "Serviços Web",
+    "subtopic": "JSON",
+    "prompt": "Assinale a opção que apresenta a notação que representa corretamente em JSON a propriedade de Nome para as Pessoas João e Maria.",
+    "options": [
+      "{\"Pessoas\": {\"Nome\":\"João\" }, {\"Nome\":\"Maria\"}}",
+      "{\"Pessoas\": [{\"Nome\":\"João\" } {\"Nome\":\"Maria\"}]}",
+      "{\"Pessoas\": [\"Nome\":\"João\", \"Nome\":\"Maria\"]}",
+      "{\"Pessoas\" [{\"Nome\":\"João\"}, {\"Nome\":\"Maria\"}]}",
+      "{\"Pessoas\": [{\"Nome\":\"João\"}, {\"Nome\":\"Maria\"}]}"
+    ],
+    "answer": 4,
+    "explanation": "A alternativa E usa um objeto com a propriedade Pessoas contendo um array de objetos separados por vírgulas; as demais têm erros de sintaxe.",
+    "kind": "REAL — OUTRA BANCA",
+    "board": "CEBRASPE",
+    "year": 2022,
+    "origin": "TRT - 8ª Região (PA e AP)",
+    "role": "Técnico Judiciário - Tecnologia da Informação",
+    "source": "https://www.qconcursos.com/questoes-de-concursos/questoes/7f08c6ea-6f",
+    "difficulty": "Intermediária",
+    "validation": "Enunciado e origem conferidos em fonte secundária; resposta verificada tecnicamente. Gabarito definitivo original não localizado.",
+    "collected": "2026-11-22",
+    "edital_basis": "Anexo III, Sistemas, Serviços web: JSON."
   }
 ]
