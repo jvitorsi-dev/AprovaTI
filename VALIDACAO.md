@@ -61,3 +61,13 @@
 
 - As leituras JSON usam UTF-8 explícito desde o commit anterior. Foi adicionada uma migração na inicialização que repara exclusivamente textos de questões distribuídas cujo conteúdo é uma conversão reversível de UTF-8 para cp1252 ou latin-1 e coincide com a fonte versionada. Os IDs, respostas e anotações são preservados; não altera textos pessoais ou divergentes.
 - Um teste cria um banco existente com enunciado, classificação, dificuldade e alternativas corrompidos, e verifica a restauração, a idempotência e a preservação de dados de usuário. A suíte de 12 testes passou com codificação padrão ASCII; navegação simulada em DOM também passou. Não foi executado teste em Windows real.
+
+## Ampliação do banco — recorte da opção Sistemas
+
+- Foram incorporadas dez questões da FCC, TRF-3, Analista de Informática, 2019, caderno 02, tipo 001: 21, 22, 23, 26, 29, 32, 37, 38, 46 e 58. As letras foram cotejadas com o gabarito publicado no repositório, mas não se confirmou sua condição definitiva ou a existência de anulações posteriores.
+- A relação de cada nova questão com o edital de Sistemas é mostrada na revisão. Conceitos como Scrum, coesão e acoplamento, modelo espiral e formatos de caso de uso são aplicações de tópicos previstos, não termos necessariamente literais do edital; isso é explicitado na aplicação. Questões de CPM e BSC inicialmente consideradas foram retiradas para não ampliar indevidamente o escopo.
+- A origem e o link do gabarito só são exibidos após a finalização; as colunas adicionais são migradas sem apagar as respostas. Testes cobrem migração de banco antigo, idempotência, vínculo com temas, rótulos e ocultação do gabarito.
+- O acervo total passa a 25 questões (15 FCC, duas reais de outra banca e oito inéditas). Continua muito aquém do volume solicitado, sem coleta exaustiva, gabaritos definitivos ou cobertura integral de disciplinas e subtemas. A extração foi feita a partir de pesquisa nas fontes identificadas, não por um coletor automático persistente.
+
+- Acrescentadas ainda questões FCC sobre pilhas (MPE-AP 2012, [Q251345](https://www.qconcursos.com/questoes-de-concursos/questoes/c7d336fd-e5)) e contêineres ([Q1965267](https://www.qconcursos.com/questoes-de-concursos/questoes/b2e68d96-3a)); respostas conferidas tecnicamente, sem localização de gabarito original definitivo.
+- A questão 30 de APF do TRF-3 2019 foi excluída por divergência entre gabarito divulgado e correção independente; requer confirmação do caderno, gabarito definitivo e eventuais recursos. A questão [Q13900](https://www.qconcursos.com/questoes-de-concursos/questoes/e0bfdde0-07) foi descartada por ambiguidade no enunciado relativo a JOIN.

@@ -56,15 +56,16 @@ def init():
  c.execute('INSERT OR IGNORE INTO completion_events(exam_id) SELECT id FROM exams WHERE finished IS NOT NULL ORDER BY id')
  # Seeds versionados são adicionados sem substituir questões ou respostas existentes.
  columns={row['name'] for row in c.execute('PRAGMA table_info(questions)')}
- if 'collected' not in columns: c.execute('ALTER TABLE questions ADD COLUMN collected TEXT')
+ for name,typ in (('collected','TEXT'),('question_number','INTEGER'),('answer_source','TEXT'),('edital_basis','TEXT')):
+  if name not in columns: c.execute('ALTER TABLE questions ADD COLUMN '+name+' '+typ)
  for q in json.loads((ROOT/'data/real_questions.json').read_text(encoding='utf-8')):
-  existing=c.execute('SELECT * FROM questions WHERE source=?', (q['source'],)).fetchone()
+  existing=c.execute('SELECT * FROM questions WHERE source=? AND question_number IS ?', (q['source'],q.get('question_number'))).fetchone()
   if existing:
    repair_seed_question(c,existing,q)
    continue
   if duplicate(c,q): continue
   if len(q['options']) != 5 or len(set(q['options'])) != 5 or q['answer'] not in range(5): raise ValueError('Questão inválida: '+q['source'])
-  keys=['topic','subtopic','prompt','options','answer','explanation','kind','board','year','origin','role','source','difficulty','validation','collected']
+  keys=['topic','subtopic','prompt','options','answer','explanation','kind','board','year','origin','role','source','difficulty','validation','collected','question_number','answer_source','edital_basis']
   values=[json.dumps(q[k],ensure_ascii=False) if k=='options' else q.get(k) for k in keys]
   c.execute('INSERT INTO questions('+','.join(keys)+') VALUES('+','.join('?' for _ in keys)+')',values)
  c.commit(); c.close()
@@ -155,7 +156,7 @@ class Handler(BaseHTTPRequestHandler):
     for q in qq:
      q['options']=json.loads(q['options'])
      if not exam['finished']:
-      for key in ('answer','explanation','validation','source'): q.pop(key,None)
+      for key in ('answer','explanation','validation','source','answer_source'): q.pop(key,None)
     self.send({'exam':dict(exam),'questions':qq}); return
    if u.path=='/api/stats':
     self.send(rows(c.execute('select q.topic,q.subtopic,count(*) total,sum(case when a.choice=q.answer then 1 else 0 end) correct, max(e.finished) last_answer from answers a join questions q on q.id=a.question_id join exams e on e.id=a.exam_id where e.finished is not null and a.choice is not null group by q.topic,q.subtopic order by total desc'))); return

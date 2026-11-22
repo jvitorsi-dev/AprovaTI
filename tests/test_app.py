@@ -22,8 +22,8 @@ class IntegrationTests(unittest.TestCase):
   request=urllib.request.Request(self.base+path, data=json.dumps(body).encode() if body is not None else None,headers={'Content-Type':'application/json'})
   with urllib.request.urlopen(request) as response: return json.load(response)
  def test_a_seed_and_reinitialize(self):
-  before=self.request('/api/data')['stats']; self.assertEqual(before['total'],13); self.assertEqual(before['kinds']['REAL — FCC'],3)
-  server.init(); self.assertEqual(self.request('/api/data')['stats']['total'],13)
+  before=self.request('/api/data')['stats']; self.assertEqual(before['total'],25); self.assertEqual(before['kinds']['REAL — FCC'],15)
+  server.init(); self.assertEqual(self.request('/api/data')['stats']['total'],25)
  def test_b_notes_persist(self):
   note=self.request('/api/notes',{'title':'Resumo','body':'conteúdo','topic':'Docker'})
   self.request('/api/notes',{'id':note['id'],'title':'Atualizado','body':'exemplo','topic':'Docker'})
@@ -31,7 +31,7 @@ class IntegrationTests(unittest.TestCase):
   self.request('/api/notes/delete',note); self.assertFalse(any(x['id']==note['id'] for x in self.request('/api/notes')))
  def test_c_exam_rotation_and_filter_reset(self):
   filters={'scope':'Git e controle de versões','count':5}; eid=self.request('/api/exam/start',filters)['id']; exam=self.request('/api/exam/'+str(eid)); self.assertEqual(len(exam['questions']),1)
-  q=exam['questions'][0]; self.assertNotIn('answer',q); self.assertNotIn('explanation',q); self.assertNotIn('validation',q); self.assertNotIn('source',q)
+  q=exam['questions'][0]; self.assertNotIn('answer',q); self.assertNotIn('explanation',q); self.assertNotIn('validation',q); self.assertNotIn('source',q); self.assertNotIn('answer_source',q)
   self.request('/api/exam/answer',{'exam':eid,'question':q['id'],'choice':0})
   self.request('/api/exam/finish',{'exam':eid,'elapsed':15}); self.assertEqual(self.request('/api/exam/'+str(eid))['questions'][0]['answer'],1)
   with self.assertRaises(urllib.error.HTTPError) as ctx: self.request('/api/exam/start',filters)
@@ -90,6 +90,17 @@ class IntegrationTests(unittest.TestCase):
      with self.assertRaises(RuntimeError): server.model_response('tecnico','dockerfile',refs)
    with mock.patch('server.urllib.request.urlopen',return_value=Response('O Dockerfile contém instruções. [1]')):
     self.assertIn('[1]',server.model_response('tecnico','dockerfile',refs))
+ def test_fcc_new_questions_editais_e_origem(self):
+  c=server.db(); rows=list(c.execute('select * from questions where question_number is not null'))
+  self.assertEqual(len(rows),10)
+  basics=json.loads((server.ROOT/'data/basic_topics.json').read_text(encoding='utf-8'))
+  subjects={**basics,**server.TOPICS}
+  for q in rows:
+   self.assertEqual(q['board'],'FCC'); self.assertIn(q['subtopic'],subjects[q['topic']])
+   self.assertTrue(q['edital_basis']); self.assertTrue(q['answer_source'].startswith('https://'))
+   self.assertIn('não foram confirmados',q['validation'])
+  self.assertEqual({r['question_number'] for r in rows},{21,22,23,26,29,32,37,38,46,58})
+  c.close()
  def test_json_files_use_explicit_utf8(self):
   original = Path.read_text
   seen = set()
@@ -111,6 +122,28 @@ class IntegrationTests(unittest.TestCase):
   self.assertTrue(server.duplicate(c,{'prompt':q['prompt'].upper(),'options':json.loads(q['options'])})); c.close()
 
 class MojibakeMigrationTests(unittest.TestCase):
+ def test_existing_database_migrates_and_preserves_history(self):
+  previous = server.DB
+  try:
+   with tempfile.TemporaryDirectory() as temp:
+    server.DB=Path(temp)/'legacy.db'
+    c=server.db()
+    c.executescript("""CREATE TABLE questions(id INTEGER PRIMARY KEY,topic TEXT,subtopic TEXT,prompt TEXT,options TEXT,answer INTEGER,explanation TEXT,kind TEXT,board TEXT,year INTEGER,origin TEXT,role TEXT,source TEXT,difficulty TEXT,validation TEXT,collected TEXT);
+    CREATE TABLE notes(id INTEGER PRIMARY KEY,topic TEXT,title TEXT,body TEXT,updated TEXT DEFAULT CURRENT_TIMESTAMP);
+    CREATE TABLE exams(id INTEGER PRIMARY KEY,created TEXT DEFAULT CURRENT_TIMESTAMP,finished TEXT,elapsed INTEGER DEFAULT 0,scope TEXT);
+    CREATE TABLE answers(exam_id INTEGER,question_id INTEGER,choice INTEGER,marked INTEGER DEFAULT 0,position INTEGER, PRIMARY KEY(exam_id,question_id));""")
+    q=json.loads((server.ROOT/'data/real_questions.json').read_text(encoding='utf-8'))[0]
+    c.execute('INSERT INTO questions(id,topic,subtopic,prompt,options,answer,explanation,kind,board,year,origin,role,source,difficulty,validation,collected) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', (42,q['topic'],q['subtopic'],q['prompt'],json.dumps(q['options']),q['answer'],q['explanation'],q['kind'],q['board'],q['year'],q['origin'],q['role'],q['source'],q['difficulty'],q['validation'],q['collected']))
+    c.execute("INSERT INTO notes(id,title,body) VALUES(1,'Teste','preservado')")
+    c.execute("INSERT INTO exams(id,scope,finished) VALUES(1,'SQL',CURRENT_TIMESTAMP)")
+    c.execute('INSERT INTO answers(exam_id,question_id,choice,position) VALUES(1,42,2,0)')
+    c.commit();c.close();server.init();server.init();c=server.db()
+    self.assertEqual(c.execute('SELECT body FROM notes WHERE id=1').fetchone()[0],'preservado')
+    self.assertEqual(c.execute('SELECT choice FROM answers WHERE exam_id=1 AND question_id=42').fetchone()[0],2)
+    self.assertEqual(c.execute('SELECT count(*) FROM questions WHERE question_number IS NOT NULL').fetchone()[0],10)
+    self.assertEqual(c.execute('SELECT count(*) FROM questions WHERE source=?',(q['source'],)).fetchone()[0],1)
+    c.close()
+  finally: server.DB=previous
  def test_repair_preserves_user_data_and_is_idempotent(self):
   previous = server.DB
   try:
@@ -139,7 +172,7 @@ class MojibakeMigrationTests(unittest.TestCase):
     self.assertEqual(json.loads(c.execute('SELECT options FROM questions WHERE id=?',(other['id'],)).fetchone()[0]), options)
     self.assertEqual(c.execute('SELECT body FROM notes WHERE id=?',(note,)).fetchone()[0],'Não modificar Ã©')
     self.assertEqual(c.execute('SELECT choice FROM answers WHERE exam_id=? AND question_id=?',(exam,q['id'])).fetchone()[0],2)
-    self.assertEqual(c.execute('SELECT count(*) FROM questions').fetchone()[0],13)
+    self.assertEqual(c.execute('SELECT count(*) FROM questions').fetchone()[0],25)
     c.close()
   finally:
    server.DB = previous

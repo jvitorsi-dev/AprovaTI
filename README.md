@@ -12,7 +12,7 @@ O servidor escuta em `0.0.0.0` para suporte à prévia. Use somente em ambiente 
 ## Escopo e limitações
 
 - Conteúdo básico transcrito do Anexo III do PDF fornecido; tópicos específicos organizados para navegação. A transcrição completa específica deve ser conferida no PDF, páginas 59–60. Não houve verificação de retificações.
-- Acervo limitado: três questões reais FCC, duas de outras bancas e oito exercícios editoriais inéditos. As questões reais foram identificadas em fontes secundárias. As respostas das três FCC foram verificadas tecnicamente, mas seus gabaritos definitivos originais não foram localizados; consulte a situação em cada questão. Não houve coleta automatizada persistente de provas nem busca exaustiva. Não há cobertura em muitos assuntos, incluindo disciplinas básicas. O gabarito da questão real foi conferido no comentário da fonte, não em gabarito original da banca.
+- Acervo limitado: quinze questões reais FCC, duas de outras bancas e oito exercícios editoriais inéditos. Dez questões FCC vieram do caderno 02, tipo 001, de Analista de Informática do TRF-3 (2019), com relação aos tópicos de Sistemas explicitada na revisão. As questões reais foram identificadas em fontes secundárias. Os gabaritos definitivos das questões FCC não foram confirmados; dez foram conferidas com um gabarito divulgado e as anteriores foram verificadas tecnicamente; consulte a situação em cada questão. Não houve coleta automatizada persistente de provas nem busca exaustiva. Não há cobertura em muitos assuntos, incluindo disciplinas básicas. O gabarito da questão real foi conferido no comentário da fonte, não em gabarito original da banca.
 - Questões editoriais tiveram validação estrutural e revisão textual; não há validação independente automatizada de unicidade ou correção técnica. Não há geração de questões por IA.
 - Links de materiais técnicos são específicos aos assuntos listados, mas a disponibilidade não foi checada de forma automatizada; muitos subtemas não possuem material.
 - A IA é opcional e experimental: exige um provedor configurado pelo operador e não está ativa por padrão. Tem busca lexical em um conjunto limitado de resumos, não possui RAG completo nem validação independente. Avaliações geradas permanecem indisponíveis; ausência de resultados não prova ausência no edital. Consulte a seção de configuração abaixo.
@@ -29,7 +29,7 @@ Servidor HTTP padrão da biblioteca Python e SQLite (`server.py`); interface res
 - Edital CETESB nº 01/2026, PDF fornecido pelo usuário, Anexo III.
 - Questões reais: fontes específicas em `data/real_questions.json` e https://www.qconcursos.com/questoes-de-concursos/questoes/544d5320-98
 - Materiais específicos e instituições: cadastrados em `data/seed.py` e apresentados na aplicação.
-- Pesquisa adicional: prova FCC TRF-3 2019, https://arquivos.qconcursos.com/prova/arquivo_prova/66070/fcc-2019-trf-3-regiao-analista-judiciario-informatica-prova.pdf; não foi incorporada por falta de verificação cruzada com gabarito definitivo.
+- Prova FCC TRF-3 2019: https://arquivos.qconcursos.com/prova/arquivo_prova/66070/fcc-2019-trf-3-regiao-analista-judiciario-informatica-prova.pdf. Gabarito consultado: https://arquivos.qconcursos.com/prova/arquivo_gabarito/66070/fcc-2019-trf-3-regiao-analista-judiciario-informatica-gabarito.pdf. Não se confirmou que seja definitivo.
 
 Execute `python3 -m unittest discover -s tests -v` para os testes de integração isolados. Consulte `VALIDACAO.md` para resultados e pendências.
 
