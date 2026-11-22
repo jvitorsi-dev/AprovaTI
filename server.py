@@ -32,7 +32,7 @@ def init():
  # Seeds versionados são adicionados sem substituir questões ou respostas existentes.
  columns={row['name'] for row in c.execute('PRAGMA table_info(questions)')}
  if 'collected' not in columns: c.execute('ALTER TABLE questions ADD COLUMN collected TEXT')
- for q in json.loads((ROOT/'data/real_questions.json').read_text()):
+ for q in json.loads((ROOT/'data/real_questions.json').read_text(encoding='utf-8')):
   if c.execute('SELECT 1 FROM questions WHERE source=?', (q['source'],)).fetchone(): continue
   if duplicate(c,q): continue
   if len(q['options']) != 5 or len(set(q['options'])) != 5 or q['answer'] not in range(5): raise ValueError('Questão inválida: '+q['source'])
@@ -46,9 +46,9 @@ def search_reference(mode, query):
  if not words: return []
  results=[]
  if mode=='edital':
-  basics=json.loads((ROOT/'data/basics.json').read_text())
+  basics=json.loads((ROOT/'data/basics.json').read_text(encoding='utf-8'))
   docs=[(name,text,'/edital.pdf#page=40') for name,text in basics.items()]
-  docs.append(('Analista de Tecnologia da Informação – Sistemas',json.loads((ROOT/'data/specific.json').read_text()),'/edital.pdf#page=59'))
+  docs.append(('Analista de Tecnologia da Informação – Sistemas',json.loads((ROOT/'data/specific.json').read_text(encoding='utf-8')),'/edital.pdf#page=59'))
   for title,text,url in docs:
    # Preserva texto literal para que a resposta não interprete o edital.
    clauses=re.split(r'(?<=[.;])\s+',text)
@@ -69,7 +69,7 @@ def assistant_sources(mode, question):
  if mode=='tecnico':
   words={w for w in normalized(question).split() if len(w)>1 and w not in STOPWORDS}
   found=[]
-  for item in json.loads((ROOT/'data/knowledge.json').read_text()):
+  for item in json.loads((ROOT/'data/knowledge.json').read_text(encoding='utf-8')):
    score=len(words & set(normalized(item['keywords']).split()))
    if score: found.append((score,item))
   return [item for _,item in sorted(found,key=lambda x:-x[0])[:3]]
@@ -110,7 +110,7 @@ class Handler(BaseHTTPRequestHandler):
   u=urlparse(self.path); c=db()
   try:
    if u.path=='/api/data':
-    basics=json.loads((ROOT/'data/basics.json').read_text()); self.send({'topics':TOPICS,'basics':basics,'basic_topics':json.loads((ROOT/'data/basic_topics.json').read_text()),'studied':rows(c.execute('select subtopic,studied_at from study_progress')),'specific':json.loads((ROOT/'data/specific.json').read_text()),'materials':MATERIALS,'stats':statistics(c),'history':rows(c.execute('select e.*,count(a.question_id) total,sum(case when a.choice=q.answer then 1 else 0 end) correct from exams e join answers a on a.exam_id=e.id join questions q on q.id=a.question_id where e.finished is not null group by e.id order by e.id desc limit 10')),'counts':rows(c.execute('select subtopic,count(*) n from questions group by subtopic'))}); return
+    basics=json.loads((ROOT/'data/basics.json').read_text(encoding='utf-8')); self.send({'topics':TOPICS,'basics':basics,'basic_topics':json.loads((ROOT/'data/basic_topics.json').read_text(encoding='utf-8')),'studied':rows(c.execute('select subtopic,studied_at from study_progress')),'specific':json.loads((ROOT/'data/specific.json').read_text(encoding='utf-8')),'materials':MATERIALS,'stats':statistics(c),'history':rows(c.execute('select e.*,count(a.question_id) total,sum(case when a.choice=q.answer then 1 else 0 end) correct from exams e join answers a on a.exam_id=e.id join questions q on q.id=a.question_id where e.finished is not null group by e.id order by e.id desc limit 10')),'counts':rows(c.execute('select subtopic,count(*) n from questions group by subtopic'))}); return
    if u.path=='/api/assistant/history':
     self.send(rows(c.execute('select * from conversations order by id desc limit 30'))); return
    if u.path=='/api/exams/active':
@@ -160,7 +160,7 @@ class Handler(BaseHTTPRequestHandler):
     c.execute('delete from answers where exam_id=?',(eid,)); c.execute('delete from exams where id=?',(eid,)); c.commit(); self.send({'ok':True}); return
    if path=='/api/study':
     subject=d.get('subtopic',''); allowed=set(x for values in TOPICS.values() for x in values)
-    for values in json.loads((ROOT/'data/basic_topics.json').read_text()).values(): allowed.update(values)
+    for values in json.loads((ROOT/'data/basic_topics.json').read_text(encoding='utf-8')).values(): allowed.update(values)
     if subject not in allowed: raise ValueError('Assunto desconhecido')
     if d.get('studied',True): c.execute('insert into study_progress(subtopic,studied_at) values(?,CURRENT_TIMESTAMP) on conflict(subtopic) do update set studied_at=CURRENT_TIMESTAMP',(subject,))
     else: c.execute('delete from study_progress where subtopic=?',(subject,))

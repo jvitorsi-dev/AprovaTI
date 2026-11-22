@@ -90,6 +90,22 @@ class IntegrationTests(unittest.TestCase):
      with self.assertRaises(RuntimeError): server.model_response('tecnico','dockerfile',refs)
    with mock.patch('server.urllib.request.urlopen',return_value=Response('O Dockerfile contém instruções. [1]')):
     self.assertIn('[1]',server.model_response('tecnico','dockerfile',refs))
+ def test_json_files_use_explicit_utf8(self):
+  original = Path.read_text
+  seen = set()
+  def checked(path, *args, **kwargs):
+   if path.suffix == '.json':
+    self.assertEqual(kwargs.get('encoding'), 'utf-8', str(path))
+    seen.add(path.name)
+   return original(path, *args, **kwargs)
+  with mock.patch.object(Path, 'read_text', checked):
+   server.init()
+   self.request('/api/data')
+   self.request('/api/study', {'subtopic':'Word 2024', 'studied':True})
+   server.assistant_sources('edital', 'Kubernetes')
+   server.assistant_sources('tecnico', 'Dockerfile')
+  self.assertEqual(seen, {'real_questions.json','basics.json','basic_topics.json','specific.json','knowledge.json'})
+  self.request('/api/study', {'subtopic':'Word 2024', 'studied':False})
  def test_f_duplicate_normalization(self):
   c=server.db(); q=c.execute('select prompt,options from questions limit 1').fetchone()
   self.assertTrue(server.duplicate(c,{'prompt':q['prompt'].upper(),'options':json.loads(q['options'])})); c.close()
