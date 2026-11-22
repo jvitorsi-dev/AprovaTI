@@ -1046,5 +1046,101 @@
     "validation": "Enunciado e origem conferidos em fonte secundária; resposta verificada tecnicamente. Gabarito definitivo original não localizado.",
     "collected": "2026-11-22",
     "edital_basis": "Anexo III, Sistemas: tipos de testes de software."
+  },
+  {
+    "topic": "Bancos de Dados",
+    "subtopic": "Modelagem conceitual, lógica e relacional",
+    "prompt": "Um dos princípios a serem seguidos quando do projeto de um banco de dados relacional é a sua normalização. Uma tabela T se encontra na primeira forma normal",
+    "options": [
+      "se a tabela T possuir, no máximo, 10 atributos.",
+      "quando a tabela T possuir chave primária simples.",
+      "quando a tabela T não possuir chave estrangeira.",
+      "se os registros da tabela T não possuírem valores nulos.",
+      "se os domínios de cada atributo da tabela T forem atômicos."
+    ],
+    "answer": 4,
+    "explanation": "Na formulação usual da primeira forma normal, os valores dos atributos são atômicos; quantidade de colunas e chave simples não a definem.",
+    "kind": "REAL — FCC",
+    "board": "FCC",
+    "year": 2012,
+    "origin": "TST",
+    "role": "Analista Judiciário - Tecnologia da Informação",
+    "source": "https://www.qconcursos.com/questoes-de-concursos/questoes/a3053797-09",
+    "difficulty": "Intermediária",
+    "validation": "Enunciado e origem conferidos em fonte secundária; resposta técnica ou comentada. Gabarito oficial definitivo não confirmado.",
+    "collected": "2026-11-22",
+    "edital_basis": "Anexo III, Sistemas: Modelagem conceitual, lógica e relacional"
+  },
+  {
+    "topic": "Infraestrutura e Redes",
+    "subtopic": "Modelo OSI",
+    "prompt": "OSI e TCP/IP são as duas principais arquiteturas de rede utilizadas que definem modelos em camadas. No modelo OSI, as camadas que não são ponta a ponta, ou seja, que executam suas operações em cada nó ao longo do caminho de rede, não somente nos pontos finais, são as camadas",
+    "options": [
+      "de rede, de enlace de dados e física.",
+      "de transporte, de rede e física.",
+      "de sessão, de enlace de dados e física.",
+      "de transporte, de sessão e de enlace de dados.",
+      "de aplicação, de sessão e de rede."
+    ],
+    "answer": 0,
+    "explanation": "Na abordagem da questão, rede, enlace e física lidam com os nós intermediários; transporte e camadas superiores atuam ponta a ponta.",
+    "kind": "REAL — FCC",
+    "board": "FCC",
+    "year": 2015,
+    "origin": "TCE-CE",
+    "role": "Técnico de Controle Externo-Auditoria de Tecnologia da Informação",
+    "source": "https://www.qconcursos.com/questoes-de-concursos/questoes/fb462444-28",
+    "difficulty": "Intermediária",
+    "validation": "Enunciado e origem conferidos em fonte secundária; resposta técnica ou comentada. Gabarito oficial definitivo não confirmado.",
+    "collected": "2026-11-22",
+    "edital_basis": "Anexo III, Sistemas: Modelo OSI"
+  },
+  {
+    "topic": "Metodologias de Desenvolvimento de Sistemas",
+    "subtopic": "Padrões de Projeto",
+    "prompt": "A intenção do padrão de projeto Abstract Factory é",
+    "options": [
+      "definir uma interface para a criação de um objeto, deixando as subclasses decidirem que classe instanciar. Delega a instanciação para as subclasses.",
+      "converter a interface de uma classe na interface esperada pelos clientes. Permite que classes com interfaces incompatíveis trabalhem em conjunto.",
+      "fornecer uma interface para a criação de famílias de objetos relacionados ou dependentes sem especificar suas classes completas.",
+      "garantir que uma classe tenha somente uma instância e fornecer um ponto global de acesso à mesma.",
+      "separar a construção de um objeto complexo de sua representação, de modo que o mesmo processo de construção possa criar diferentes representações."
+    ],
+    "answer": 2,
+    "explanation": "Abstract Factory fornece uma interface para criar famílias de objetos relacionados sem especificar classes concretas. A fonte reproduz a palavra “completas”; a redação original do caderno e o gabarito definitivo devem ser conferidos.",
+    "kind": "REAL — FCC",
+    "board": "FCC",
+    "year": 2018,
+    "origin": "SEGEP-MA",
+    "role": "Analista Executivo - Programador de Sistemas",
+    "source": "https://www.qconcursos.com/questoes-de-concursos/questoes/3738dadc-8f",
+    "difficulty": "Intermediária",
+    "validation": "Enunciado e origem conferidos em fonte secundária; resposta técnica ou comentada. Gabarito oficial definitivo não confirmado.",
+    "collected": "2026-11-22",
+    "edital_basis": "Anexo III, Sistemas: Padrões de Projeto"
+  },
+  {
+    "topic": "Metodologias de Desenvolvimento de Sistemas",
+    "subtopic": "Padrões de Projeto",
+    "prompt": "Um técnico deseja usar um padrão de projeto de criação que permita que as subclasses da aplicação possam variar. Este padrão deverá ser focado no processo de instanciação e encapsular a criação de objetos, deixando as subclasses decidirem quais objetos criar e garantindo assim, baixo acoplamento. Para conseguir o que deseja, o técnico selecionou o padrão de projeto que possui uma classe abstrata Creator que define um método especifico para criação de objetos. Trata-se do padrão:",
+    "options": [
+      "Prototype.",
+      "Adapter.",
+      "Factory Method.",
+      "Composite.",
+      "Façade."
+    ],
+    "answer": 2,
+    "explanation": "Factory Method define um método para criar objetos e permite a subclasses decidir qual tipo concreto produzir.",
+    "kind": "REAL — FCC",
+    "board": "FCC",
+    "year": 2015,
+    "origin": "TRE-PB",
+    "role": "Técnico Judiciário - Área Apoio Especializado - Programação de Sistemas",
+    "source": "https://www.qconcursos.com/questoes-de-concursos/questoes/ece1bd14-9e",
+    "difficulty": "Intermediária",
+    "validation": "Enunciado e origem conferidos em fonte secundária; resposta técnica ou comentada. Gabarito oficial definitivo não confirmado.",
+    "collected": "2026-11-22",
+    "edital_basis": "Anexo III, Sistemas: Padrões de Projeto"
   }
 ]
