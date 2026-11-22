@@ -109,4 +109,39 @@ class IntegrationTests(unittest.TestCase):
  def test_f_duplicate_normalization(self):
   c=server.db(); q=c.execute('select prompt,options from questions limit 1').fetchone()
   self.assertTrue(server.duplicate(c,{'prompt':q['prompt'].upper(),'options':json.loads(q['options'])})); c.close()
+
+class MojibakeMigrationTests(unittest.TestCase):
+ def test_repair_preserves_user_data_and_is_idempotent(self):
+  previous = server.DB
+  try:
+   with tempfile.TemporaryDirectory() as temp:
+    server.DB = Path(temp) / 'existing.db'
+    server.init()
+    c = server.db()
+    q = c.execute("SELECT * FROM questions WHERE source LIKE '%a7c4739a-d4'").fetchone()
+    corrupt = lambda value: value.encode('utf-8').decode('cp1252')
+    c.execute('UPDATE questions SET prompt=?, kind=?, difficulty=?, explanation=? WHERE id=?',
+              (corrupt(q['prompt']), corrupt(q['kind']), corrupt(q['difficulty']), 'Anotação editorial alterada', q['id']))
+    other = c.execute("SELECT * FROM questions WHERE source LIKE '%17807e52-03'").fetchone()
+    options = json.loads(other['options'])
+    c.execute('UPDATE questions SET options=? WHERE id=?', (json.dumps([corrupt(x) for x in options],ensure_ascii=False), other['id']))
+    note = c.execute('INSERT INTO notes(topic,title,body) VALUES(?,?,?)', ('SQL','Minha anotação','Não modificar Ã©')).lastrowid
+    exam = c.execute("INSERT INTO exams(scope,finished) VALUES('SQL',CURRENT_TIMESTAMP)").lastrowid
+    c.execute('INSERT INTO answers(exam_id,question_id,choice,position) VALUES(?,?,?,?)', (exam,q['id'],2,0))
+    c.commit(); c.close()
+    server.init(); server.init()
+    c = server.db()
+    updated = c.execute('SELECT * FROM questions WHERE id=?',(q['id'],)).fetchone()
+    self.assertEqual(updated['prompt'],q['prompt'])
+    self.assertEqual(updated['kind'],q['kind'])
+    self.assertEqual(updated['difficulty'],q['difficulty'])
+    self.assertEqual(updated['explanation'],'Anotação editorial alterada')
+    self.assertEqual(json.loads(c.execute('SELECT options FROM questions WHERE id=?',(other['id'],)).fetchone()[0]), options)
+    self.assertEqual(c.execute('SELECT body FROM notes WHERE id=?',(note,)).fetchone()[0],'Não modificar Ã©')
+    self.assertEqual(c.execute('SELECT choice FROM answers WHERE exam_id=? AND question_id=?',(exam,q['id'])).fetchone()[0],2)
+    self.assertEqual(c.execute('SELECT count(*) FROM questions').fetchone()[0],13)
+    c.close()
+  finally:
+   server.DB = previous
+
 if __name__=='__main__': unittest.main()

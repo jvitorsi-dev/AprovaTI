@@ -16,6 +16,31 @@ def duplicate(c, candidate):
   op=normalized(old['prompt']); oo=sorted(normalized(x) for x in json.loads(old['options']))
   if SequenceMatcher(None,prompt,op).ratio() >= .96 and SequenceMatcher(None,' '.join(opts),' '.join(oo)).ratio() >= .96: return True
  return False
+def restore_if_mojibake(value, expected):
+ # Só restaura quando a transformação é reversível e coincide exatamente
+ # com o texto distribuído. Dados pessoais e edições diferentes são preservados.
+ if not isinstance(value,str) or not isinstance(expected,str) or value==expected: return value
+ for encoding in ('cp1252','latin-1'):
+  try:
+   if value.encode(encoding).decode('utf-8')==expected: return expected
+  except (UnicodeEncodeError, UnicodeDecodeError): pass
+ return value
+
+def repair_seed_question(c, current, seed):
+ changes={}
+ fields=('topic','subtopic','prompt','explanation','kind','board','origin','role','difficulty','validation','collected')
+ for field in fields:
+  corrected=restore_if_mojibake(current[field],seed.get(field))
+  if corrected!=current[field]: changes[field]=corrected
+ try:
+  original_options=json.loads(current['options'])
+  if isinstance(original_options,list) and len(original_options)==len(seed['options']):
+   corrected=[restore_if_mojibake(actual,expected) for actual,expected in zip(original_options,seed['options'])]
+   if corrected!=original_options: changes['options']=json.dumps(corrected,ensure_ascii=False)
+ except (TypeError,ValueError): pass
+ if changes:
+  c.execute('UPDATE questions SET '+','.join(field+'=?' for field in changes)+' WHERE id=?', [*changes.values(),current['id']])
+
 def init():
  c=db(); c.executescript('''CREATE TABLE IF NOT EXISTS questions(id INTEGER PRIMARY KEY,topic TEXT,subtopic TEXT,prompt TEXT,options TEXT,answer INTEGER,explanation TEXT,kind TEXT,board TEXT,year INTEGER,origin TEXT,role TEXT,source TEXT,difficulty TEXT, validation TEXT); CREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY,topic TEXT,title TEXT,body TEXT,updated TEXT DEFAULT CURRENT_TIMESTAMP); CREATE TABLE IF NOT EXISTS exams(id INTEGER PRIMARY KEY,created TEXT DEFAULT CURRENT_TIMESTAMP,finished TEXT,elapsed INTEGER DEFAULT 0,scope TEXT); CREATE TABLE IF NOT EXISTS answers(exam_id INTEGER,question_id INTEGER,choice INTEGER,marked INTEGER DEFAULT 0,position INTEGER, PRIMARY KEY(exam_id,question_id), FOREIGN KEY(exam_id) REFERENCES exams(id),FOREIGN KEY(question_id) REFERENCES questions(id));''')
  if not c.execute('SELECT count(*) FROM questions').fetchone()[0]:
@@ -33,7 +58,10 @@ def init():
  columns={row['name'] for row in c.execute('PRAGMA table_info(questions)')}
  if 'collected' not in columns: c.execute('ALTER TABLE questions ADD COLUMN collected TEXT')
  for q in json.loads((ROOT/'data/real_questions.json').read_text(encoding='utf-8')):
-  if c.execute('SELECT 1 FROM questions WHERE source=?', (q['source'],)).fetchone(): continue
+  existing=c.execute('SELECT * FROM questions WHERE source=?', (q['source'],)).fetchone()
+  if existing:
+   repair_seed_question(c,existing,q)
+   continue
   if duplicate(c,q): continue
   if len(q['options']) != 5 or len(set(q['options'])) != 5 or q['answer'] not in range(5): raise ValueError('Questão inválida: '+q['source'])
   keys=['topic','subtopic','prompt','options','answer','explanation','kind','board','year','origin','role','source','difficulty','validation','collected']

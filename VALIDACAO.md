@@ -56,3 +56,8 @@
 - O servidor bloqueia consulta à IA quando há simulados abertos, verifica novamente após o provedor responder e permite descartar simulados pendentes. O histórico é persistido; testes usaram um provedor simulado, não um modelo real.
 - A geração de avaliações permanece desativada, com orientação ao modelo e bloqueio textual preventivo; o filtro não garante resistência a pedidos indiretos.
 - Dez testes de integração Python e navegação simulada em DOM foram executados com sucesso. A acessibilidade visual e o funcionamento com serviços reais ainda não foram testados.
+
+## Correção de textos corrompidos por codificação
+
+- As leituras JSON usam UTF-8 explícito desde o commit anterior. Foi adicionada uma migração na inicialização que repara exclusivamente textos de questões distribuídas cujo conteúdo é uma conversão reversível de UTF-8 para cp1252 ou latin-1 e coincide com a fonte versionada. Os IDs, respostas e anotações são preservados; não altera textos pessoais ou divergentes.
+- Um teste cria um banco existente com enunciado, classificação, dificuldade e alternativas corrompidos, e verifica a restauração, a idempotência e a preservação de dados de usuário. A suíte de 12 testes passou com codificação padrão ASCII; navegação simulada em DOM também passou. Não foi executado teste em Windows real.
