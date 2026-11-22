@@ -21,7 +21,7 @@ const root = path.resolve(__dirname, '..');
     for(const [page,text] of [['Dashboard','Prepare-se com propósito'],['Disciplinas','Ortografia e acentuação'],['Simulados','Monte seu simulado'],['Materiais','Todos os materiais'],['Minhas anotações','Suas anotações'],['Assistente IA','Perguntar à IA'],['Desempenho','Desempenho por assunto'],['Acervo','Bancas reais']]){
       w.go(page);await new Promise(r=>setTimeout(r,100));if(!w.document.body.textContent.includes(text)) throw Error(`${page} não carregou`);console.log(page,'OK');
     }
-    w.go('Acervo'); if(!w.document.body.textContent.includes('51 / 1.200') || !w.document.body.textContent.includes('COBIT 2019 · 1 questões') || !w.document.body.textContent.includes('42 grupos') || !w.document.body.textContent.includes('Atual subtema')) throw Error('Inventário inconsistente');
+    w.go('Acervo'); if(!w.document.body.textContent.includes('75 / 1.200') || !w.document.body.textContent.includes('COBIT 2019 · 1 questões') || !w.document.body.textContent.includes('42 grupos') || !w.document.body.textContent.includes('Atual subtema')) throw Error('Inventário inconsistente');
     w.study(encodeURIComponent('Docker'));if(!w.document.body.textContent.includes('Dockerfile reference'))throw Error('material Docker ausente');
     w.setup(encodeURIComponent('Docker'));if(w.document.querySelector('#scope').value!=='Docker')throw Error('filtro não selecionado');
     await new Promise(r=>setTimeout(r,150));if(errors.length)throw Error(errors.join('\n'));console.log('Assunto e filtro OK');

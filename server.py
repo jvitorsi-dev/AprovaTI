@@ -69,6 +69,14 @@ def init():
   keys=['topic','subtopic','prompt','options','answer','explanation','kind','board','year','origin','role','source','difficulty','validation','collected','question_number','answer_source','edital_basis','answer_status','answer_status_source']
   values=[json.dumps(q[k],ensure_ascii=False) if k=='options' else (q.get(k, 'não confirmado') if k=='answer_status' else q.get(k)) for k in keys]
   c.execute('INSERT INTO questions('+','.join(keys)+') VALUES('+','.join('?' for _ in keys)+')',values)
+ # Questões inéditas são independentes das reais e importadas também em bancos existentes.
+ for q in json.loads((ROOT/'data/original_questions.json').read_text(encoding='utf-8')):
+  if c.execute('SELECT 1 FROM questions WHERE prompt=?', (q['prompt'],)).fetchone() or duplicate(c,q): continue
+  if q['topic'] not in TOPICS or q['subtopic'] not in TOPICS[q['topic']] or not q['prompt'].strip() or not q['explanation'].strip() or len(q['options'])!=5 or len(set(q['options']))!=5 or any(not x.strip() for x in q['options']) or q['answer'] not in range(5):
+   raise ValueError('Questão inédita inválida: '+q['prompt'])
+  keys=['topic','subtopic','prompt','options','answer','explanation','kind','board','difficulty','validation','collected','edital_basis','answer_status']
+  values=[json.dumps(q[k],ensure_ascii=False) if k=='options' else q[k] for k in keys]
+  c.execute('INSERT INTO questions('+','.join(keys)+') VALUES('+','.join('?' for _ in keys)+')',values)
  c.commit(); c.close()
 STOPWORDS={'qual','quais','como','que','com','uma','para','sobre','do','da','dos','das','de','em','no','na','o','a','e','ou','se','por','preciso','estudar','edital','cobrado','previsto','esta','entre'}
 def search_reference(mode, query):

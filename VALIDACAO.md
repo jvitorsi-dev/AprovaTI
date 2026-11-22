@@ -114,3 +114,9 @@
 - Descartadas desta coleta: Q62239 e Q62238, sinalizadas como anuladas na [fonte consultada](https://www.qconcursos.com/questoes-de-concursos/questoes?discipline_ids%5B%5D=96&examining_board_ids%5B%5D=1&page=75); Q39545, por comentário indicando possível ambiguidade; Q762153, por possuir quatro alternativas incompatíveis com o formato atual. Outras candidatas não foram consideradas revisadas ou esgotadas.
 - Banco inicial atualizado: 51 questões, sendo 34 FCC, nove de outras bancas e oito inéditas; 43 reais sem confirmação de gabarito definitivo e oito inéditas aguardando revisão. Faltam 1.149 para a meta estrutural de 1.200. A auditoria integral de duplicidade e a confirmação oficial dos gabaritos permanecem pendentes; a contagem não comprova validação completa.
 - Verificação: 19 testes Python sob locale ASCII e teste de navegação DOM passaram; não substituem testes em Windows real nem auditoria de conteúdo.
+
+### Ampliação de inéditas — 22/11/2026
+
+- Acrescentadas 24 questões geradas por IA, identificadas como **INÉDITA — ESTILO FCC**, em tópicos do edital que incluem estruturas de dados, .NET, serviços web, dados, segurança, redes, acessibilidade e IA. Cada uma traz cinco alternativas, uma resposta proposta e explicação. São exercícios autorais, não provas da FCC; todas continuam com revisão editorial independente pendente.
+- O arquivo `data/original_questions.json` é importado em bancos novos e existentes sem remover respostas ou histórico; há verificação estrutural e comparação de similaridade na importação. Isso não constitui auditoria completa de duplicidade ou de qualidade pedagógica.
+- Banco inicial: 75 questões estruturalmente válidas (34 FCC, nove de outras bancas e 32 inéditas). Das reais, 43 continuam sem gabarito definitivo confirmado; das inéditas, 32 aguardam revisão independente. Faltam 1.125 para a meta estrutural de 1.200; a meta de questões válidas e auditadas não foi atingida.
