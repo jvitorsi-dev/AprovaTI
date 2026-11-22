@@ -56,8 +56,9 @@ def init():
  c.execute('INSERT OR IGNORE INTO completion_events(exam_id) SELECT id FROM exams WHERE finished IS NOT NULL ORDER BY id')
  # Seeds versionados são adicionados sem substituir questões ou respostas existentes.
  columns={row['name'] for row in c.execute('PRAGMA table_info(questions)')}
- for name,typ in (('collected','TEXT'),('question_number','INTEGER'),('answer_source','TEXT'),('edital_basis','TEXT')):
+ for name,typ in (('collected','TEXT'),('question_number','INTEGER'),('answer_source','TEXT'),('edital_basis','TEXT'),('answer_status','TEXT'),('answer_status_source','TEXT')):
   if name not in columns: c.execute('ALTER TABLE questions ADD COLUMN '+name+' '+typ)
+ c.execute("UPDATE questions SET answer_status=CASE WHEN kind LIKE 'REAL%' THEN 'não confirmado' ELSE 'revisão editorial pendente' END WHERE answer_status IS NULL")
  for q in json.loads((ROOT/'data/real_questions.json').read_text(encoding='utf-8')):
   existing=c.execute('SELECT * FROM questions WHERE source=? AND question_number IS ?', (q['source'],q.get('question_number'))).fetchone()
   if existing:
@@ -65,8 +66,8 @@ def init():
    continue
   if duplicate(c,q): continue
   if len(q['options']) != 5 or len(set(q['options'])) != 5 or q['answer'] not in range(5): raise ValueError('Questão inválida: '+q['source'])
-  keys=['topic','subtopic','prompt','options','answer','explanation','kind','board','year','origin','role','source','difficulty','validation','collected','question_number','answer_source','edital_basis']
-  values=[json.dumps(q[k],ensure_ascii=False) if k=='options' else q.get(k) for k in keys]
+  keys=['topic','subtopic','prompt','options','answer','explanation','kind','board','year','origin','role','source','difficulty','validation','collected','question_number','answer_source','edital_basis','answer_status','answer_status_source']
+  values=[json.dumps(q[k],ensure_ascii=False) if k=='options' else (q.get(k, 'não confirmado') if k=='answer_status' else q.get(k)) for k in keys]
   c.execute('INSERT INTO questions('+','.join(keys)+') VALUES('+','.join('?' for _ in keys)+')',values)
  c.commit(); c.close()
 STOPWORDS={'qual','quais','como','que','com','uma','para','sobre','do','da','dos','das','de','em','no','na','o','a','e','ou','se','por','preciso','estudar','edital','cobrado','previsto','esta','entre'}
@@ -130,6 +131,25 @@ def model_response(mode, question, refs):
  if not citations or any(int(i)<1 or int(i)>len(refs) for i in citations): raise RuntimeError('Resposta rejeitada: referências ausentes ou inválidas.')
  return output.strip()
 def rows(cur): return [dict(x) for x in cur]
+def question_structurally_valid(q):
+ try:
+  opts=json.loads(q['options'])
+  return bool(q['prompt'] and q['prompt'].strip() and q['explanation'] and q['explanation'].strip() and q['kind'] and q['board']) and (not q['kind'].startswith('REAL') or bool(q['source'] and q['source'].startswith('https://') and q['year'] and q['origin'] and q['role'])) and isinstance(opts,list) and len(opts)==5 and all(isinstance(o,str) and o.strip() for o in opts) and len(set(opts))==5 and type(q['answer']) is int and q['answer'] in range(5)
+ except (TypeError,ValueError): return False
+
+def audit_questions(c):
+ counts={'definitivo':0,'preliminar':0,'anulada':0,'não confirmado':0,'revisão editorial pendente':0,'editorial validada':0,'outros':0}
+ invalid=0; eligible=0
+ for q in c.execute('select prompt,options,answer,kind,board,source,year,origin,role,explanation,answer_status,answer_status_source from questions'):
+  status=q['answer_status'] or ('não confirmado' if (q['kind'] or '').startswith('REAL') else 'revisão editorial pendente')
+  # Um estado definitivo sem referência explícita nunca é considerado confirmado.
+  if status=='definitivo' and not (q['answer_status_source'] or '').startswith('https://'): status='não confirmado'
+  counts[status if status in counts else 'outros']+=1
+  valid=question_structurally_valid(q)
+  if not valid: invalid+=1
+  if valid and status!='anulada': eligible+=1
+ return {'status':counts,'estruturalmente_invalidas':invalid,'estruturalmente_validas_nao_anuladas':eligible,'duplicatas_auditadas':False}
+
 def statistics(c):
  qs=c.execute('select kind,count(*) n from questions group by kind').fetchall(); a=c.execute('select count(*) n, sum(case when a.choice=q.answer then 1 else 0 end) correct from answers a join questions q on q.id=a.question_id join exams e on e.id=a.exam_id where e.finished is not null and a.choice is not null').fetchone(); return {'total':sum(x['n'] for x in qs),'kinds':{x['kind']:x['n'] for x in qs},'answered':a['n'],'correct':a['correct'] or 0}
 class Handler(BaseHTTPRequestHandler):
@@ -139,7 +159,7 @@ class Handler(BaseHTTPRequestHandler):
   u=urlparse(self.path); c=db()
   try:
    if u.path=='/api/data':
-    basics=json.loads((ROOT/'data/basics.json').read_text(encoding='utf-8')); self.send({'topics':TOPICS,'basics':basics,'basic_topics':json.loads((ROOT/'data/basic_topics.json').read_text(encoding='utf-8')),'studied':rows(c.execute('select subtopic,studied_at from study_progress')),'specific':json.loads((ROOT/'data/specific.json').read_text(encoding='utf-8')),'materials':MATERIALS,'stats':statistics(c),'history':rows(c.execute('select e.*,count(a.question_id) total,sum(case when a.choice=q.answer then 1 else 0 end) correct from exams e join answers a on a.exam_id=e.id join questions q on q.id=a.question_id where e.finished is not null group by e.id order by e.id desc limit 10')),'counts':rows(c.execute('select subtopic,count(*) n from questions group by subtopic')),'question_inventory':rows(c.execute("select topic,subtopic,kind,coalesce(board,'Não informada') board,count(*) n from questions group by topic,subtopic,kind,board order by topic,subtopic,kind,board"))}); return
+    basics=json.loads((ROOT/'data/basics.json').read_text(encoding='utf-8')); self.send({'topics':TOPICS,'basics':basics,'basic_topics':json.loads((ROOT/'data/basic_topics.json').read_text(encoding='utf-8')),'studied':rows(c.execute('select subtopic,studied_at from study_progress')),'specific':json.loads((ROOT/'data/specific.json').read_text(encoding='utf-8')),'materials':MATERIALS,'stats':statistics(c),'history':rows(c.execute('select e.*,count(a.question_id) total,sum(case when a.choice=q.answer then 1 else 0 end) correct from exams e join answers a on a.exam_id=e.id join questions q on q.id=a.question_id where e.finished is not null group by e.id order by e.id desc limit 10')),'counts':rows(c.execute('select subtopic,count(*) n from questions group by subtopic')),'question_audit':audit_questions(c),'question_inventory':rows(c.execute("select topic,subtopic,kind,coalesce(board,'Não informada') board,count(*) n from questions group by topic,subtopic,kind,board order by topic,subtopic,kind,board"))}); return
    if u.path=='/api/assistant/history':
     self.send(rows(c.execute('select * from conversations order by id desc limit 30'))); return
    if u.path=='/api/exams/active':
@@ -155,8 +175,9 @@ class Handler(BaseHTTPRequestHandler):
     qq=rows(c.execute('select q.*,a.choice,a.marked,a.position from answers a join questions q on q.id=a.question_id where a.exam_id=? order by a.position',(eid,)))
     for q in qq:
      q['options']=json.loads(q['options'])
+     if q['answer_status']=='definitivo' and not (q['answer_status_source'] or '').startswith('https://'): q['answer_status']='não confirmado'
      if not exam['finished']:
-      for key in ('answer','explanation','validation','source','answer_source'): q.pop(key,None)
+      for key in ('answer','explanation','validation','source','answer_source','answer_status','answer_status_source'): q.pop(key,None)
     self.send({'exam':dict(exam),'questions':qq}); return
    if u.path=='/api/stats':
     self.send(rows(c.execute('select q.topic,q.subtopic,count(*) total,sum(case when a.choice=q.answer then 1 else 0 end) correct, max(e.finished) last_answer from answers a join questions q on q.id=a.question_id join exams e on e.id=a.exam_id where e.finished is not null and a.choice is not null group by q.topic,q.subtopic order by total desc'))); return
@@ -208,13 +229,13 @@ class Handler(BaseHTTPRequestHandler):
      c.execute('insert into rotation_cycles(filter_key,after_exam) values(?,?) on conflict(filter_key) do update set after_exam=excluded.after_exam',(key,cutoff)); c.commit(); self.send({'ok':True}); return
     count=max(1,min(int(d.get('count',10)),1000)); cutoff=c.execute('select after_exam from rotation_cycles where filter_key=?',(key,)).fetchone(); cutoff=cutoff[0] if cutoff else 0
     query="""select q.*, exists(select 1 from answers a join exams e on e.id=a.exam_id join completion_events ce on ce.exam_id=e.id where a.question_id=q.id and e.finished is not null and a.choice is not null and ce.id>?) used,
-      (select a.choice!=q.answer from answers a join exams e on e.id=a.exam_id where a.question_id=q.id and e.finished is not null and a.choice is not null order by e.id desc limit 1) last_wrong from questions q where 1=1"""; params=[cutoff]
+      (select a.choice!=q.answer from answers a join exams e on e.id=a.exam_id where a.question_id=q.id and e.finished is not null and a.choice is not null order by e.id desc limit 1) last_wrong from questions q where coalesce(q.answer_status,'não confirmado') != 'anulada'"""; params=[cutoff]
     if scope: query+=' and (q.topic=? or q.subtopic=?)'; params.extend([scope,scope])
     if kind=='real': query+=" and q.kind like 'REAL%'"
     if kind=='inedita': query+=" and q.kind like 'INÉDITA%'"
     if not include_other: query+=" and q.kind != 'REAL — OUTRA BANCA'"
     if difficulty: query+=' and q.difficulty=?'; params.append(difficulty)
-    allq=rows(c.execute(query,params)); fresh=[q for q in allq if not q['used']]; random.shuffle(fresh); fresh.sort(key=lambda q: 0 if q['kind']=='REAL — FCC' else 1)
+    allq=[q for q in rows(c.execute(query,params)) if question_structurally_valid(q)]; fresh=[q for q in allq if not q['used']]; random.shuffle(fresh); fresh.sort(key=lambda q: 0 if q['kind']=='REAL — FCC' else 1)
     if not allq: self.send({'error':'Não há questões disponíveis para este filtro.','available':0},409); return
     if not fresh and not d.get('repeat'): self.send({'error':'Todas as questões deste filtro já foram respondidas. Reinicie o ciclo ou permita repetição.','available':len(allq)},409); return
     pool=fresh

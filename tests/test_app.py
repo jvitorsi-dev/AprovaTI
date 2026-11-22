@@ -32,6 +32,30 @@ class IntegrationTests(unittest.TestCase):
   self.assertEqual(sum(row['n'] for row in inv if row['kind']=='INÉDITA — ESTILO FCC'),8)
   self.assertTrue(any(row['board']=='FGV' and row['subtopic']=='COBIT 2019' for row in inv))
   self.assertTrue(any(row['topic']=='Língua Portuguesa' and row['board']=='FCC' for row in inv))
+ def test_inventory_validation_states_and_provisional_answers(self):
+  audit=self.request('/api/data')['question_audit']
+  self.assertEqual(audit['status']['não confirmado'],36)
+  self.assertEqual(audit['status']['revisão editorial pendente'],8)
+  self.assertEqual(audit['status']['definitivo'],0)
+  self.assertEqual(audit['estruturalmente_validas_nao_anuladas'],44)
+  self.assertFalse(audit['duplicatas_auditadas'])
+  eid=self.request('/api/exam/start',{'scope':'COBIT 2019'})['id']
+  active=self.request('/api/exam/'+str(eid))['questions'][0]
+  self.assertNotIn('answer_status',active)
+  self.request('/api/exam/finish',{'exam':eid})
+  reviewed=self.request('/api/exam/'+str(eid))['questions'][0]
+  self.assertEqual(reviewed['answer_status'],'não confirmado')
+ def test_annulled_and_invalid_excluded(self):
+  c=server.db(); q=c.execute("select id,answer_status,options from questions where subtopic='Kubernetes'").fetchone()
+  try:
+   c.execute("update questions set answer_status='anulada' where id=?",(q['id'],)); c.commit()
+   self.assertEqual(self.request('/api/data')['question_audit']['status']['anulada'],1)
+   with self.assertRaises(urllib.error.HTTPError): self.request('/api/exam/start',{'scope':'Kubernetes'})
+   c.execute("update questions set answer_status='não confirmado',options='[]' where id=?",(q['id'],)); c.commit()
+   self.assertEqual(self.request('/api/data')['question_audit']['estruturalmente_invalidas'],1)
+   with self.assertRaises(urllib.error.HTTPError): self.request('/api/exam/start',{'scope':'Kubernetes'})
+  finally:
+   c.execute('update questions set answer_status=?,options=? where id=?',(q['answer_status'],q['options'],q['id']));c.commit();c.close()
  def test_b_notes_persist(self):
   note=self.request('/api/notes',{'title':'Resumo','body':'conteúdo','topic':'Docker'})
   self.request('/api/notes',{'id':note['id'],'title':'Atualizado','body':'exemplo','topic':'Docker'})
