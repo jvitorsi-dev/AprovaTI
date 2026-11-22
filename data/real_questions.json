@@ -1,0 +1,94 @@
+[
+  {
+    "topic": "Bancos de Dados",
+    "subtopic": "SQL ANSI/ISO",
+    "prompt": "O SQL (Structured Query Language) é uma linguagem de pesquisa declarativa para banco de dados relacional. A DDL permite ao usuário definir tabelas novas e elementos associados. A sigla DDL significa",
+    "options": [
+      "Data Definition List.",
+      "Data Default Language.",
+      "Data Definition Language.",
+      "Data Default List.",
+      "Definition Data Language."
+    ],
+    "answer": 2,
+    "explanation": "DDL significa Data Definition Language, linguagem de definição de dados. As demais alternativas apresentam expansões incorretas da sigla.",
+    "kind": "REAL — FCC",
+    "board": "FCC",
+    "year": 2010,
+    "origin": "METRÔ-SP",
+    "role": "Analista - Tecnologia da Informação",
+    "source": "https://www.qconcursos.com/questoes-de-concursos/questoes/a7c4739a-d4",
+    "difficulty": "Básica",
+    "validation": "Enunciado e origem conferidos na fonte secundária; resposta C verificada tecnicamente. Gabarito definitivo original não localizado.",
+    "collected": "2026-11-22"
+  },
+  {
+    "topic": "Linguagens e Técnicas de Programação",
+    "subtopic": "Orientação a objetos",
+    "prompt": "A análise e o projeto orientados a objeto modelam um sistema em termos de objetos, que têm propriedades e comportamentos, e de eventos, que disparam operações que mudam o estado dos objetos. Considere, abaixo, os fundamentos da Orientação a Objetos − OO:\n\nI. Ato de empacotar ao mesmo tempo dados e objetos. O objeto esconde seus dados de outros objetos e permite que os dados sejam acessados por intermédio de seus próprios métodos. Protege os dados do objeto do uso arbitrário e não-intencional. Separa a maneira como um objeto se comporta da maneira como ele é implementado.\n\nII. Refere-se à implementação de um tipo de objeto. Especifica uma estrutura de dados e as operações permissíveis que se aplicam a cada um de seus objetos.\n\nIII. Pode ser real ou abstrato. Possui informações (dados) e desempenha ações (funcionalidades). É qualquer coisa, real ou abstrata, a respeito da qual são armazenados dados e operações.\n\nOs conceitos da OO indicados em I, II e III, são, correta e respectivamente,",
+    "options": [
+      "Herança, Classe, Atributo.",
+      "Encapsulamento, Método, Objeto.",
+      "Polimorfismo, Superclasse, Método.",
+      "Encapsulamento, Classe, Objeto.",
+      "Herança, Método, Atributo."
+    ],
+    "answer": 3,
+    "explanation": "I descreve encapsulamento; II, classe; III, objeto. As demais opções trocam um ou mais desses conceitos. A redação do item I é reproduzida da fonte.",
+    "kind": "REAL — FCC",
+    "board": "FCC",
+    "year": 2016,
+    "origin": "TRF - 3ª REGIÃO",
+    "role": "Técnico Judiciário - Informática",
+    "source": "https://www.qconcursos.com/questoes-de-concursos/questoes/17807e52-03",
+    "difficulty": "Intermediária",
+    "validation": "Enunciado e origem conferidos na fonte secundária; resposta D verificada tecnicamente. Gabarito definitivo original não localizado.",
+    "collected": "2026-11-22"
+  },
+  {
+    "topic": "Linguagens e Técnicas de Programação",
+    "subtopic": "Herança e polimorfismo",
+    "prompt": "Assinale a alternativa que, na programação orientada a objetos, representa a característica que permite prover uma única interface a entidades de diferentes tipos.",
+    "options": [
+      "Herança.",
+      "Encapsulamento.",
+      "Reuso.",
+      "Acoplamento.",
+      "Polimorfismo."
+    ],
+    "answer": 4,
+    "explanation": "Polimorfismo permite tratar objetos de tipos distintos por meio de uma interface comum. Herança relaciona classes; encapsulamento restringe exposição; reuso e acoplamento descrevem outros aspectos.",
+    "kind": "REAL — OUTRA BANCA",
+    "board": "IF-PI",
+    "year": 2016,
+    "origin": "IF-PI",
+    "role": "Analista de Tecnologia da Informação",
+    "source": "https://www.qconcursos.com/questoes-de-concursos/questoes/5566289b-f7",
+    "difficulty": "Básica",
+    "validation": "Enunciado, origem e resposta E conferidos em fonte secundária; gabarito definitivo original não localizado.",
+    "collected": "2026-11-22"
+  },
+  {
+    "topic": "DevOps",
+    "subtopic": "Docker",
+    "prompt": "Um técnico deseja usar o Keycloak no Docker, instalado e em condições ideais.\n\nI 8080:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:20.0.0 start-dev\n\nPara iniciar o Keycloak exposto na porta local 8080, criando um usuário inicial admin, com senha admin, a lacuna I deve ser preenchida por:",
+    "options": [
+      "docker run -v",
+      "docker container start on port",
+      "docker run -p",
+      "docker start --port",
+      "docker container run -d port"
+    ],
+    "answer": 2,
+    "explanation": "docker run -p publica a porta do contêiner no host. -v trata de volumes; as demais sintaxes não definem corretamente a publicação de portas. O exemplo usa credenciais inseguras apenas como contexto histórico da prova.",
+    "kind": "REAL — FCC",
+    "board": "FCC",
+    "year": 2023,
+    "origin": "TRT - 18ª Região (GO)",
+    "role": "Técnico Judiciário - Tecnologia da Informação",
+    "source": "https://www.qconcursos.com/questoes-de-concursos/questoes/f276f437-c8",
+    "difficulty": "Básica",
+    "validation": "Origem e gabarito C conferidos no comentário da fonte secundária; gabarito definitivo original não localizado.",
+    "collected": "2026-11-22"
+  }
+]
