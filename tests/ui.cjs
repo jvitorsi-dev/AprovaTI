@@ -18,11 +18,11 @@ const root = path.resolve(__dirname, '..');
     const w=dom.window;w.fetch=(url,opts)=>fetch(new URL(url,w.location.href),opts);w.alert=x=>{throw Error('alert: '+x)};w.confirm=()=>true;
     w.eval(fs.readFileSync(path.join(root,'public/app.js'),'utf8'));
     await new Promise(r=>setTimeout(r,350));
-    for(const [page,text] of [['Dashboard','Prepare-se com propósito'],['Disciplinas','Ortografia e acentuação'],['Simulados','Monte seu simulado'],['Materiais','Todos os materiais'],['Minhas anotações','Suas anotações'],['Assistente IA','Busca de referências'],['Desempenho','Desempenho por assunto']]){
+    for(const [page,text] of [['Dashboard','Prepare-se com propósito'],['Disciplinas','Ortografia e acentuação'],['Simulados','Monte seu simulado'],['Materiais','Todos os materiais'],['Minhas anotações','Suas anotações'],['Assistente IA','Perguntar à IA'],['Desempenho','Desempenho por assunto']]){
       w.go(page);await new Promise(r=>setTimeout(r,100));if(!w.document.body.textContent.includes(text)) throw Error(`${page} não carregou`);console.log(page,'OK');
     }
     w.study(encodeURIComponent('Docker'));if(!w.document.body.textContent.includes('Dockerfile reference'))throw Error('material Docker ausente');
     w.setup(encodeURIComponent('Docker'));if(w.document.querySelector('#scope').value!=='Docker')throw Error('filtro não selecionado');
-    if(errors.length)throw Error(errors.join('\n'));console.log('Assunto e filtro OK');
+    await new Promise(r=>setTimeout(r,150));if(errors.length)throw Error(errors.join('\n'));console.log('Assunto e filtro OK');
   } finally {if(dom)dom.window.close();server.kill();fs.rmSync(dir,{recursive:true,force:true})}
 })().catch(e=>{console.error(e);process.exitCode=1});

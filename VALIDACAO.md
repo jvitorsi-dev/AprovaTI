@@ -47,3 +47,12 @@
 
 - A tela do assistente agora oferece busca lexical sem IA, com segregação entre os trechos do edital e o catálogo de materiais técnicos. O teste automatizado verificou separação de URLs e retorno vazio para termos inexistentes. Ela não interpreta nem responde perguntas e não substitui um assistente ou mecanismo RAG.
 - Foram executados oito testes Python e o teste de navegação em DOM após esta alteração.
+
+## Assistente opcional — continuação
+
+- Implementado cliente de Chat Completions opcional configurado por ambiente; nenhum modelo ou credencial está incluído, nem se realizou chamada a provedor real neste ambiente.
+- Modo edital e modo técnico usam conjuntos separados. O modo técnico usa quatro resumos editoriais limitados, não uma cópia completa das fontes nem consulta em tempo real. A correspondência por palavras pode perder resultados ou recuperar conteúdo irrelevante.
+- A resposta é rejeitada se não houver marcador de fonte válido ou se contiver URL gerada; essas verificações não garantem correção factual ou citação de todas as afirmações. Não há verificação independente do texto gerado.
+- O servidor bloqueia consulta à IA quando há simulados abertos, verifica novamente após o provedor responder e permite descartar simulados pendentes. O histórico é persistido; testes usaram um provedor simulado, não um modelo real.
+- A geração de avaliações permanece desativada, com orientação ao modelo e bloqueio textual preventivo; o filtro não garante resistência a pedidos indiretos.
+- Dez testes de integração Python e navegação simulada em DOM foram executados com sucesso. A acessibilidade visual e o funcionamento com serviços reais ainda não foram testados.

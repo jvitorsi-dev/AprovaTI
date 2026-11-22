@@ -15,7 +15,7 @@ O servidor escuta em `0.0.0.0` para suporte à prévia. Use somente em ambiente 
 - Acervo limitado: três questões reais FCC, duas de outras bancas e oito exercícios editoriais inéditos. As questões reais foram identificadas em fontes secundárias. As respostas das três FCC foram verificadas tecnicamente, mas seus gabaritos definitivos originais não foram localizados; consulte a situação em cada questão. Não houve coleta automatizada persistente de provas nem busca exaustiva. Não há cobertura em muitos assuntos, incluindo disciplinas básicas. O gabarito da questão real foi conferido no comentário da fonte, não em gabarito original da banca.
 - Questões editoriais tiveram validação estrutural e revisão textual; não há validação independente automatizada de unicidade ou correção técnica. Não há geração de questões por IA.
 - Links de materiais técnicos são específicos aos assuntos listados, mas a disponibilidade não foi checada de forma automatizada; muitos subtemas não possuem material.
-- Assistente e avaliações por IA estão explicitamente desativados: não há integração de provedor, RAG, histórico de conversas ou validação independente. Há uma busca simples de referências por palavras com contextos separados, sem geração de respostas; ausência de resultados não prova ausência no edital. Nenhum segredo é solicitado.
+- A IA é opcional e experimental: exige um provedor configurado pelo operador e não está ativa por padrão. Tem busca lexical em um conjunto limitado de resumos, não possui RAG completo nem validação independente. Avaliações geradas permanecem indisponíveis; ausência de resultados não prova ausência no edital. Consulte a seção de configuração abaixo.
 - Rotação exclui questões respondidas em simulados finalizados, globalmente e também em filtros sobrepostos. Questões não respondidas e simulados abandonados não contam como utilizadas. Repetição é opcional, com preferência por erros da última resposta quando solicitada. O ciclo pode ser reiniciado para o conjunto de filtros escolhido, sem apagar o histórico. Sem autenticação, o banco representa um único usuário. O relógio usa o navegador.
 - Anotações aceitam Markdown como texto, sem editor visual ou renderização. Autosave é iniciado após breve pausa de digitação.
 - Há uma verificação simples de similaridade de enunciado e alternativas ao acrescentar o acervo versionado; não substitui revisão manual. Não há coleta automatizada, testes gerados, busca semântica, ou indicadores de evolução temporal. Estatísticas são derivadas dos simulados finalizados. O histórico exibido é limitado aos dez mais recentes.
@@ -40,3 +40,18 @@ A marcação manual por subtema é persistida em SQLite. O painel sugere revisã
 ### Teste de navegação no DOM (opcional)
 
 `npm ci && npm run test:ui` executa verificação de navegação com jsdom e banco temporário. É uma simulação de DOM, não um teste visual ou teste em navegador real. A aplicação em si continua requerendo apenas Python.
+
+### Assistente opcional (experimental)
+
+A busca lexical continua funcionando sem serviço externo. Para gerar respostas, configure um servidor OpenAI-compatible Chat Completions acessível pelo processo Python e reinicie o servidor:
+
+```sh
+export APROVATI_AI_URL="http://localhost:1234/v1/chat/completions"
+export APROVATI_AI_MODEL="nome-do-modelo"
+# Opcional: APROVATI_AI_KEY em variável de ambiente no servidor, se o provedor exigir.
+python3 server.py
+```
+
+A URL é configuração do servidor, não recebida do navegador. HTTP é aceito apenas para localhost; provedores remotos exigem HTTPS. Não versione segredos. Pergunta e trechos selecionados são enviados ao provedor configurado: evite informações sensíveis e confira as políticas de privacidade. Na prévia, conectividade externa é limitada e não há provedor pré-configurado.
+
+O modo edital consulta exclusivamente trechos extraídos do PDF anexo; nenhuma retificação foi verificada. O modo técnico usa apenas quatro resumos editoriais com fontes documentais (`data/knowledge.json`); não baixa nem indexa páginas automaticamente. O aplicativo fornece os links, exige marcações de referência existentes e rejeita URLs geradas pelo modelo. Isso não verifica a veracidade de cada afirmação; modelos podem errar ou não seguir instruções. A geração de avaliações não está implementada e é proibida no prompt; filtros de texto não garantem bloqueio de pedidos indiretos. Não use respostas do modelo como material validado sem conferir as fontes. O histórico permanece no SQLite e não é enviado automaticamente em consultas seguintes. Enquanto existir qualquer simulado aberto, a API bloqueia novas respostas da IA; a tela Simulados permite continuar ou descartar simulados abertos.
