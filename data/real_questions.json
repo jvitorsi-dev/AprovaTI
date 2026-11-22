@@ -758,5 +758,101 @@
     "validation": "Resposta B verificada tecnicamente. Gabarito definitivo original não localizado.",
     "collected": "2026-11-22",
     "edital_basis": "Anexo III, Noções De Administração Pública: Liderança."
+  },
+  {
+    "topic": "DevOps",
+    "subtopic": "Kubernetes",
+    "prompt": "A menor unidade de computação implantável que se pode criar e gerenciar no Kubernetes são denominados tecnicamente como sendo:",
+    "options": [
+      "bean",
+      "shell",
+      "kerne",
+      "pod",
+      "hem"
+    ],
+    "answer": 3,
+    "explanation": "Um Pod é a menor unidade implantável no Kubernetes, podendo conter um ou mais contêineres.",
+    "kind": "REAL — OUTRA BANCA",
+    "board": "IBFC",
+    "year": 2022,
+    "origin": "TJ-MG",
+    "role": "Analista Judiciário - Tecnologia da Informação",
+    "source": "https://www.qconcursos.com/questoes-de-concursos/questoes/bd6eecd5-7b",
+    "difficulty": "Intermediária",
+    "validation": "Resposta conferida tecnicamente; grafia da alternativa C preservada. Enunciado e origem em fonte secundária; gabarito definitivo original não confirmado.",
+    "collected": "2026-11-22",
+    "edital_basis": "Anexo III, Sistemas: Kubernetes."
+  },
+  {
+    "topic": "Gestão de TI",
+    "subtopic": "COBIT 2019",
+    "prompt": "O COBIT 2019 é um framework utilizado em muitas organizações. Sobre este framework, é correto afirmar que",
+    "options": [
+      "é uma estrutura para organizar os processos de negócios do ambiente de TI.",
+      "descreve as ferramentas tecnológicas indispensáveis para construir e manter software com qualidade.",
+      "indica as certificações de sustentabilidade necessárias para demonstrar que a empresa respeita as questões ambientais.",
+      "prescreve as decisões técnicas e administrativas que devem implementadas no departamento de TI.",
+      "define os componentes para construir e sustentar um sistema de governança e gestão da informação."
+    ],
+    "answer": 4,
+    "explanation": "O COBIT 2019 define componentes de um sistema de governança de informação e tecnologia; não prescreve decisões técnicas específicas nem certificações ambientais.",
+    "kind": "REAL — OUTRA BANCA",
+    "board": "FGV",
+    "year": 2022,
+    "origin": "TRT - 13ª Região (PB)",
+    "role": "Analista Judiciário - Tecnologia da Informação",
+    "source": "https://www.qconcursos.com/questoes-de-concursos/questoes/a4151b66-76",
+    "difficulty": "Intermediária",
+    "validation": "Resposta E corroborada por comentário da fonte secundária; redação da alternativa D preservada. Enunciado e origem em fonte secundária; gabarito definitivo original não confirmado.",
+    "collected": "2026-11-22",
+    "edital_basis": "Anexo III, Sistemas: COBIT 2019."
+  },
+  {
+    "topic": "Metodologias de Desenvolvimento de Sistemas",
+    "subtopic": "Padrões de Projeto",
+    "prompt": "Como garantimos que uma classe tenha somente uma instância e que essa instância seja facilmente acessível? Uma variável global torna um objeto acessível, mas não impede você de instanciar múltiplos objetos.\n\nGAMMA, E. et al. Padrões de Projeto: Soluções reutilizáveis de software orientado a objetos. Porto Alegre: Bookman, 2000.\n\nEm relação ao exposto e ao padrão de projeto Singleton, assinale alternativa que indica uma das vantagens do referido padrão.",
+    "options": [
+      "O padrão de projeto garante a existência de apenas um único objeto da classe em questão, disponibilizando um modo de acessá-la.",
+      "O padrão aumenta a quantidade de variáveis globais no namespace em questão.",
+      "Não é necessário implementar qualquer mecanismo de controle de instância do objeto.",
+      "O padrão Singleton não apresenta uma interface simples, uma vez que a implementação dele não é trivial.",
+      "O padrão faz necessário o uso de variáveis globais."
+    ],
+    "answer": 0,
+    "explanation": "Singleton controla a instanciação e fornece acesso à instância única. As demais opções não descrevem uma vantagem ou atribuem comportamento indevido.",
+    "kind": "REAL — OUTRA BANCA",
+    "board": "IADES",
+    "year": 2018,
+    "origin": "CFM",
+    "role": "Analista de Tecnologia da Informação",
+    "source": "https://www.qconcursos.com/questoes-de-concursos/questoes/f8a07ce4-38",
+    "difficulty": "Intermediária",
+    "validation": "Resposta A corroborada por comentário da fonte secundária. Enunciado e origem em fonte secundária; gabarito definitivo original não confirmado.",
+    "collected": "2026-11-22",
+    "edital_basis": "Anexo III, Sistemas: Padrões de Projeto."
+  },
+  {
+    "topic": "DevOps",
+    "subtopic": "Docker",
+    "prompt": "Para a conteinerização de aplicações, são necessárias tecnologias que suportem esse tipo de operação; entre elas, há tecnologias consideradas como container runtime, que são responsáveis por executar os contêineres e gerenciar as imagens dos contêineres. Uma tecnologia que é capaz de prover a capacidade de containerruntime é o",
+    "options": [
+      "Jboss.",
+      "Tomcat.",
+      "Active Directory.",
+      "Docker.",
+      "PostgreSQL."
+    ],
+    "answer": 3,
+    "explanation": "Docker oferece recursos para construir imagens e executar contêineres. JBoss e Tomcat são servidores de aplicações; Active Directory é serviço de diretório; PostgreSQL é SGBD.",
+    "kind": "REAL — OUTRA BANCA",
+    "board": "CEBRASPE",
+    "year": 2021,
+    "origin": "TJ-RJ",
+    "role": "Analista Judiciário - Analista de Infraestrutura de TIC",
+    "source": "https://www.qconcursos.com/questoes-de-concursos/questoes/6321429a-98",
+    "difficulty": "Intermediária",
+    "validation": "Resposta D corroborada por comentário da fonte secundária. Enunciado e origem em fonte secundária; gabarito definitivo original não confirmado.",
+    "collected": "2026-11-22",
+    "edital_basis": "Anexo III, Sistemas: Contêineres (Docker)."
   }
 ]

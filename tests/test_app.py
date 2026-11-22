@@ -22,8 +22,16 @@ class IntegrationTests(unittest.TestCase):
   request=urllib.request.Request(self.base+path, data=json.dumps(body).encode() if body is not None else None,headers={'Content-Type':'application/json'})
   with urllib.request.urlopen(request) as response: return json.load(response)
  def test_a_seed_and_reinitialize(self):
-  before=self.request('/api/data')['stats']; self.assertEqual(before['total'],40); self.assertEqual(before['kinds']['REAL — FCC'],27)
-  server.init(); self.assertEqual(self.request('/api/data')['stats']['total'],40)
+  before=self.request('/api/data')['stats']; self.assertEqual(before['total'],44); self.assertEqual(before['kinds']['REAL — FCC'],27)
+  server.init(); self.assertEqual(self.request('/api/data')['stats']['total'],44)
+ def test_inventory_counts_by_topic_and_board(self):
+  data=self.request('/api/data'); inv=data['question_inventory']
+  self.assertEqual(sum(row['n'] for row in inv),data['stats']['total'])
+  self.assertEqual(sum(row['n'] for row in inv if row['kind']=='REAL — FCC'),27)
+  self.assertEqual(sum(row['n'] for row in inv if row['kind']=='REAL — OUTRA BANCA'),9)
+  self.assertEqual(sum(row['n'] for row in inv if row['kind']=='INÉDITA — ESTILO FCC'),8)
+  self.assertTrue(any(row['board']=='FGV' and row['subtopic']=='COBIT 2019' for row in inv))
+  self.assertTrue(any(row['topic']=='Língua Portuguesa' and row['board']=='FCC' for row in inv))
  def test_b_notes_persist(self):
   note=self.request('/api/notes',{'title':'Resumo','body':'conteúdo','topic':'Docker'})
   self.request('/api/notes',{'id':note['id'],'title':'Atualizado','body':'exemplo','topic':'Docker'})
@@ -188,7 +196,7 @@ class MojibakeMigrationTests(unittest.TestCase):
     self.assertEqual(json.loads(c.execute('SELECT options FROM questions WHERE id=?',(other['id'],)).fetchone()[0]), options)
     self.assertEqual(c.execute('SELECT body FROM notes WHERE id=?',(note,)).fetchone()[0],'Não modificar Ã©')
     self.assertEqual(c.execute('SELECT choice FROM answers WHERE exam_id=? AND question_id=?',(exam,q['id'])).fetchone()[0],2)
-    self.assertEqual(c.execute('SELECT count(*) FROM questions').fetchone()[0],40)
+    self.assertEqual(c.execute('SELECT count(*) FROM questions').fetchone()[0],44)
     c.close()
   finally:
    server.DB = previous
