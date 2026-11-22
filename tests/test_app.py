@@ -22,8 +22,8 @@ class IntegrationTests(unittest.TestCase):
   request=urllib.request.Request(self.base+path, data=json.dumps(body).encode() if body is not None else None,headers={'Content-Type':'application/json'})
   with urllib.request.urlopen(request) as response: return json.load(response)
  def test_a_seed_and_reinitialize(self):
-  before=self.request('/api/data')['stats']; self.assertEqual(before['total'],32); self.assertEqual(before['kinds']['REAL — FCC'],19)
-  server.init(); self.assertEqual(self.request('/api/data')['stats']['total'],32)
+  before=self.request('/api/data')['stats']; self.assertEqual(before['total'],40); self.assertEqual(before['kinds']['REAL — FCC'],27)
+  server.init(); self.assertEqual(self.request('/api/data')['stats']['total'],40)
  def test_b_notes_persist(self):
   note=self.request('/api/notes',{'title':'Resumo','body':'conteúdo','topic':'Docker'})
   self.request('/api/notes',{'id':note['id'],'title':'Atualizado','body':'exemplo','topic':'Docker'})
@@ -101,6 +101,22 @@ class IntegrationTests(unittest.TestCase):
    self.assertIn('não foram confirmados',q['validation'])
   self.assertEqual({r['question_number'] for r in rows},{21,22,23,26,29,32,37,38,46,58})
   c.close()
+ def test_real_questions_catalog_and_basic_filters(self):
+  subjects={**json.loads((server.ROOT/'data/basic_topics.json').read_text(encoding='utf-8')),**server.TOPICS}
+  questions=json.loads((server.ROOT/'data/real_questions.json').read_text(encoding='utf-8'))
+  keys=set()
+  for q in questions:
+   self.assertIn(q['subtopic'],subjects[q['topic']])
+   self.assertEqual(len(q['options']),5)
+   self.assertIn(q['answer'],range(5))
+   self.assertTrue(q['source'].startswith('https://'))
+   key=(q['source'],q.get('question_number'))
+   self.assertNotIn(key,keys); keys.add(key)
+  for scope in ('Língua Portuguesa','Raciocínio Lógico','Noções De Administração Pública'):
+   exam_id=self.request('/api/exam/start',{'scope':scope,'count':1})['id']
+   question=self.request('/api/exam/'+str(exam_id))['questions'][0]
+   self.assertEqual(question['topic'],scope)
+   self.request('/api/exam/discard',{'exam':exam_id})
  def test_json_files_use_explicit_utf8(self):
   original = Path.read_text
   seen = set()
@@ -172,7 +188,7 @@ class MojibakeMigrationTests(unittest.TestCase):
     self.assertEqual(json.loads(c.execute('SELECT options FROM questions WHERE id=?',(other['id'],)).fetchone()[0]), options)
     self.assertEqual(c.execute('SELECT body FROM notes WHERE id=?',(note,)).fetchone()[0],'Não modificar Ã©')
     self.assertEqual(c.execute('SELECT choice FROM answers WHERE exam_id=? AND question_id=?',(exam,q['id'])).fetchone()[0],2)
-    self.assertEqual(c.execute('SELECT count(*) FROM questions').fetchone()[0],32)
+    self.assertEqual(c.execute('SELECT count(*) FROM questions').fetchone()[0],40)
     c.close()
   finally:
    server.DB = previous

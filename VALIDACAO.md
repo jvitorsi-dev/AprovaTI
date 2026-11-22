@@ -78,3 +78,9 @@
 - Total: 29 questões (16 FCC, 5 de outras bancas e 8 inéditas). A cobertura ainda não é integral e a coleta não é exaustiva.
 
 - Acrescentadas questões FCC de [Data Warehouse/ETL](https://www.qconcursos.com/questoes-de-concursos/questoes/1541ecad-06), [IPv6](https://www.qconcursos.com/questoes-de-concursos/questoes/48fac23b-b9) e [teste de unidade](https://www.qconcursos.com/questoes-de-concursos/questoes/a334e16d-ce). Respostas conferidas tecnicamente; gabaritos definitivos não localizados. Total agora: 32 (19 FCC, 5 outras bancas, 8 inéditas); lacunas permanecem.
+
+## Coleta adicional
+
+- Incluídas questões FCC sobre [RUP](https://www.qconcursos.com/questoes-de-concursos/questoes/1ee1aff0-58), [árvores](https://www.qconcursos.com/questoes-de-concursos/questoes/27f8da2a-57), [CSS](https://www.qconcursos.com/questoes-de-concursos/questoes/46262962-c8), [SQL](https://www.qconcursos.com/questoes-de-concursos/questoes/72ae1f92-16) e [padrões web](https://www.qconcursos.com/questoes-de-concursos/questoes/d5ff0e70-96), com respostas corroboradas por comentário em fonte secundária, não por gabarito definitivo. Acervo total: 37 questões (24 FCC, cinco de outras bancas e oito inéditas). Coleta e cobertura continuam incompletas.
+
+- Primeiras questões de conhecimentos básicos: [crase](https://www.qconcursos.com/questoes-de-concursos/questoes/2d90a582-57), [raciocínio lógico](https://www.qconcursos.com/questoes-de-concursos/questoes/1dfb96f6-d7) e [liderança](https://www.qconcursos.com/questoes-de-concursos/questoes/5f248344-0c), todas FCC e com respostas verificadas em fonte secundária ou tecnicamente, mas sem gabarito definitivo original. Total: 40 (27 FCC, cinco de outras bancas e oito inéditas).
