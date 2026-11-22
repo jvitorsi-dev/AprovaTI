@@ -494,5 +494,77 @@
     "validation": "Enunciado e origem conferidos em fonte secundária; resposta verificada tecnicamente. Gabarito definitivo original não localizado.",
     "collected": "2026-11-22",
     "edital_basis": "Anexo III, Sistemas, Serviços web: JSON."
+  },
+  {
+    "topic": "Bancos de Dados",
+    "subtopic": "Data Warehouse",
+    "prompt": "O processo de ETL em uma Data Warehouse possui várias fases. Em uma destas fases é efetuada a",
+    "options": [
+      "extração dos dados dos sistemas de origem.",
+      "introdução de novos produtos no mercado.",
+      "validação das interfaces de usuário.",
+      "criação de diagramas estáticos e comportamentais das classes e atributos.",
+      "definição dos custos e prazos."
+    ],
+    "answer": 0,
+    "explanation": "ETL compreende extração, transformação e carga dos dados; as demais alternativas não descrevem uma dessas fases.",
+    "kind": "REAL — FCC",
+    "board": "FCC",
+    "year": 2012,
+    "origin": "TST",
+    "role": "Analista Judiciário - Análise de Sistemas",
+    "source": "https://www.qconcursos.com/questoes-de-concursos/questoes/1541ecad-06",
+    "difficulty": "Intermediária",
+    "validation": "Enunciado e origem conferidos em fonte secundária; resposta verificada tecnicamente. Gabarito definitivo original não localizado.",
+    "collected": "2026-11-22",
+    "edital_basis": "Anexo III, Sistemas: conceitos de Data Warehouse. ETL é aplicação complementar."
+  },
+  {
+    "topic": "Infraestrutura e Redes",
+    "subtopic": "IPv4 e IPv6",
+    "prompt": "O IPv6 estabelece o uso de 128 bits para indicar o endereço, enquanto o IPv4 utiliza 32 bits, o que lhe confere uma capacidade extremamente elevada de endereços IP. Considerando os endereços IPv6, NÃO é uma representação permitida:",
+    "options": [
+      "1001:AB8::120C::240D",
+      "1001:ab8:0:0:120c::",
+      "1001:ab8::120c:0:0:240d",
+      "1001:ab8:0:0:120c::240d",
+      "1001:AB8:0:0:120C::240D"
+    ],
+    "answer": 0,
+    "explanation": "A abreviação :: só pode aparecer uma vez no endereço IPv6; maiúsculas e minúsculas hexadecimais são equivalentes.",
+    "kind": "REAL — FCC",
+    "board": "FCC",
+    "year": 2014,
+    "origin": "TJ-AP",
+    "role": "Analista Judiciário - Tecnologia da Informação - Administração em Redes de Computadores",
+    "source": "https://www.qconcursos.com/questoes-de-concursos/questoes/48fac23b-b9",
+    "difficulty": "Intermediária",
+    "validation": "Enunciado e origem conferidos em fonte secundária; resposta verificada tecnicamente. Gabarito definitivo original não localizado.",
+    "collected": "2026-11-22",
+    "edital_basis": "Anexo III, Sistemas: TCP/IP, IPv4 e IPv6."
+  },
+  {
+    "topic": "Metodologias de Desenvolvimento de Sistemas",
+    "subtopic": "Testes de software",
+    "prompt": "Testes de software buscam por erros ou anomalias em requisitos funcionais e não funcionais. É INCORRETO afirmar que o teste de unidade",
+    "options": [
+      "exercita todos os caminhos básicos ao longo da estrutura de controle para garantir que todos os comandos do módulo/componente tenham sido executados pelo menos uma vez.",
+      "testa a interface do módulo/componente para garantir que a informação flua adequadamente para dentro e para fora da unidade de programa que está sendo testada.",
+      "automatizado tem 3 partes: configuração, que inicia o módulo/componente com o caso de teste e dados de entrada; comparação, que compara o teste ao resultado esperado e correção, que corrige automaticamente os erros.",
+      "testa as condições-limite para garantir que o componente/módulo opere adequadamente nos limiares conhecidos para limitar ou restringir o processamento.",
+      "possui como uma tarefa essencial o teste seletivo de caminhos de execução. Casos de teste devem ser projetados para descobrir erros devidos a cálculos errados, comparações incorretas ou fluxo de controle inadequado."
+    ],
+    "answer": 2,
+    "explanation": "Um teste automatizado identifica divergências, mas não corrige automaticamente os erros do código. As demais alternativas descrevem atividades possíveis de teste unitário.",
+    "kind": "REAL — FCC",
+    "board": "FCC",
+    "year": 2015,
+    "origin": "CNMP",
+    "role": "Analista do CNMP - Tecnologia de Informação e Comunicação Desenvolvimento de Sistemas",
+    "source": "https://www.qconcursos.com/questoes-de-concursos/questoes/a334e16d-ce",
+    "difficulty": "Intermediária",
+    "validation": "Enunciado e origem conferidos em fonte secundária; resposta verificada tecnicamente. Gabarito definitivo original não localizado.",
+    "collected": "2026-11-22",
+    "edital_basis": "Anexo III, Sistemas: testes de unidade."
   }
 ]

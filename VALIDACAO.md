@@ -76,3 +76,5 @@
 
 - Incluídas [Q1965284](https://www.qconcursos.com/questoes-de-concursos/questoes/b31b8eab-3a) (FCC, JSON), [Q892479](https://www.qconcursos.com/questoes-de-concursos/questoes/91f6bb62-57) (CESGRANRIO, JSON/JavaScript), [Q491591](https://www.qconcursos.com/questoes-de-concursos/questoes/5f53385f-d6) (CESGRANRIO, ordenação) e [Q1990150](https://www.qconcursos.com/questoes-de-concursos/questoes/7f08c6ea-6f) (CEBRASPE, JSON). Origens e alternativas consultadas em fonte secundária, respostas verificadas tecnicamente; gabaritos originais definitivos não confirmados.
 - Total: 29 questões (16 FCC, 5 de outras bancas e 8 inéditas). A cobertura ainda não é integral e a coleta não é exaustiva.
+
+- Acrescentadas questões FCC de [Data Warehouse/ETL](https://www.qconcursos.com/questoes-de-concursos/questoes/1541ecad-06), [IPv6](https://www.qconcursos.com/questoes-de-concursos/questoes/48fac23b-b9) e [teste de unidade](https://www.qconcursos.com/questoes-de-concursos/questoes/a334e16d-ce). Respostas conferidas tecnicamente; gabaritos definitivos não localizados. Total agora: 32 (19 FCC, 5 outras bancas, 8 inéditas); lacunas permanecem.
