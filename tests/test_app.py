@@ -2,6 +2,7 @@ import json
 import tempfile
 import threading
 import unittest
+from unittest import mock
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -58,6 +59,37 @@ class IntegrationTests(unittest.TestCase):
   tecnico=self.request('/api/reference-search?mode=tecnico&q=Docker')['results']
   self.assertTrue(tecnico); self.assertTrue(all(not x['url'].startswith('/edital.pdf') for x in tecnico))
   self.assertEqual(self.request('/api/reference-search?mode=edital&q=assuntoinexistente')['results'],[])
+ def test_assistant_block_sources_history(self):
+  for e in self.request('/api/exams/active'): self.request('/api/exam/discard',{'exam':e['id']})
+  eid=self.request('/api/exam/start',{'scope':'Docker','count':1})['id']
+  with mock.patch('server.model_response',return_value='Resposta [1]') as provider:
+   with self.assertRaises(urllib.error.HTTPError) as ctx: self.request('/api/assistant',{'mode':'tecnico','question':'Explique Docker'})
+   self.assertEqual(ctx.exception.code,409); provider.assert_not_called()
+   self.request('/api/exam/discard',{'exam':eid})
+   with self.assertRaises(urllib.error.HTTPError) as ctx: self.request('/api/assistant',{'mode':'tecnico','question':'Crie questões sobre Docker'})
+   self.assertEqual(ctx.exception.code,400)
+   response=self.request('/api/assistant',{'mode':'tecnico','question':'Explique Dockerfile'})
+   self.assertEqual(response['answer'],'Resposta [1]'); self.assertTrue(all('docker.com' in r['url'] for r in response['sources']))
+   args=provider.call_args.args; self.assertEqual(args[0],'tecnico'); self.assertTrue(all(not r['url'].startswith('/edital') for r in args[2]))
+   response=self.request('/api/assistant',{'mode':'edital','question':'O edital cita Kubernetes?'})
+   self.assertTrue(all(r['url'].startswith('/edital.pdf') for r in response['sources']))
+   self.assertEqual(len(self.request('/api/assistant/history')),2)
+  server.init(); self.assertEqual(len(self.request('/api/assistant/history')),2)
+  with self.assertRaises(urllib.error.HTTPError) as ctx: self.request('/api/assistant',{'mode':'tecnico','question':'assuntoinexistente'})
+  self.assertEqual(ctx.exception.code,404)
+ def test_model_citation_validation(self):
+  class Response:
+   def __init__(self,content): self.content=content
+   def __enter__(self): return self
+   def __exit__(self,*args): pass
+   def read(self,n): return json.dumps({'choices':[{'message':{'content':self.content}}]}).encode()
+  refs=server.assistant_sources('tecnico','dockerfile')
+  with mock.patch.dict('os.environ',{'APROVATI_AI_URL':'http://localhost:1234/v1/chat/completions','APROVATI_AI_MODEL':'test'}):
+   for content in ['Sem referência', 'Fonte [9]', 'Fonte [1] https://exemplo.com']:
+    with mock.patch('server.urllib.request.urlopen',return_value=Response(content)):
+     with self.assertRaises(RuntimeError): server.model_response('tecnico','dockerfile',refs)
+   with mock.patch('server.urllib.request.urlopen',return_value=Response('O Dockerfile contém instruções. [1]')):
+    self.assertIn('[1]',server.model_response('tecnico','dockerfile',refs))
  def test_f_duplicate_normalization(self):
   c=server.db(); q=c.execute('select prompt,options from questions limit 1').fetchone()
   self.assertTrue(server.duplicate(c,{'prompt':q['prompt'].upper(),'options':json.loads(q['options'])})); c.close()
