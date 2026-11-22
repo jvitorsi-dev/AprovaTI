@@ -1022,5 +1022,29 @@
     "validation": "Enunciado e origem conferidos em fonte secundária; resposta verificada tecnicamente. Gabarito definitivo original não localizado.",
     "collected": "2026-11-22",
     "edital_basis": "Anexo III, Sistemas: Linguagem SQL padronizada (ANSI/ISO)."
+  },
+  {
+    "topic": "Metodologias de Desenvolvimento de Sistemas",
+    "subtopic": "Testes de software",
+    "prompt": "Considere:\nCaso 1: Pedro foi contratado para realizar testes de software na empresa B. Realizava um conjunto de testes na interface do software focados em exercitar os requisitos funcionais. Na bateria de testes que realizava, procurava encontrar funções incorretas ou faltando, erros de interface, erros em estruturas de dados, erros em acesso a base de dados externas, erros de comportamento e de desempenho e erros de inicialização e término.\nCaso 2: Paulo foi contratado para realizar testes de software na empresa C. Realizava testes nos caminhos lógicos do software e nas colaborações entre componentes exercitando conjuntos específicos de condições e/ou ciclos. Testava todos os caminhos independentes dos módulos pelo menos uma vez, exercitava as decisões lógicas nos seus estados verdadeiro ou falso e exercitava estruturas internas para assegurar a sua validade.\n\nPedro realizava testes",
+    "options": [
+      "caixa-branca e Paulo realizava testes caixa-preta.",
+      "de caminho básico e Paulo realizava testes de condição.",
+      "de unidade e Paulo realizava testes de integração.",
+      "caixa-preta e Paulo realizava testes caixa-branca.",
+      "de ciclo e Paulo realizava testes de fluxo de dados"
+    ],
+    "answer": 3,
+    "explanation": "O caso 1 foca comportamento e requisitos funcionais, característicos de caixa-preta; o caso 2 exercita caminhos e estruturas internas, característicos de caixa-branca.",
+    "kind": "REAL — FCC",
+    "board": "FCC",
+    "year": 2013,
+    "origin": "DPE-RS",
+    "role": "Analista - Informática",
+    "source": "https://www.qconcursos.com/questoes-de-concursos/questoes/5e6c9bd8-2b",
+    "difficulty": "Intermediária",
+    "validation": "Enunciado e origem conferidos em fonte secundária; resposta verificada tecnicamente. Gabarito definitivo original não localizado.",
+    "collected": "2026-11-22",
+    "edital_basis": "Anexo III, Sistemas: tipos de testes de software."
   }
 ]
