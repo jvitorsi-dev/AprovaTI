@@ -1,0 +1,6 @@
+{
+  "name": "aprovati",
+  "private": true,
+  "scripts": {"test:ui": "node tests/ui.cjs"},
+  "devDependencies": {"jsdom": "26.1.0"}
+}
