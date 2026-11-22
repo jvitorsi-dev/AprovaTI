@@ -56,6 +56,15 @@ class IntegrationTests(unittest.TestCase):
    with self.assertRaises(urllib.error.HTTPError): self.request('/api/exam/start',{'scope':'Kubernetes'})
   finally:
    c.execute('update questions set answer_status=?,options=? where id=?',(q['answer_status'],q['options'],q['id']));c.commit();c.close()
+ def test_grouped_goals_cover_all_subtopics_exactly_once(self):
+  data=self.request('/api/data'); goals=data['question_goals']
+  self.assertEqual(sum(x['meta'] for x in goals),1200)
+  self.assertEqual(sum(x['meta'] for x in goals if x['disciplina']=='Conhecimentos Específicos'),800)
+  self.assertTrue(all(x['meta'] in (20,40,80) for x in goals))
+  expected={(topic,sub) for topic,subs in {**data['basic_topics'],**data['topics']}.items() for sub in subs}
+  actual=[(g['disciplina'] if g['tema']=='—' else g['tema'],sub) for g in goals for sub in g['subtemas']]
+  self.assertEqual(len(actual),len(set(actual)));self.assertEqual(set(actual),expected)
+  self.assertEqual(sum(x['n'] for x in data['question_audit']['por_subtema']),44)
  def test_b_notes_persist(self):
   note=self.request('/api/notes',{'title':'Resumo','body':'conteúdo','topic':'Docker'})
   self.request('/api/notes',{'id':note['id'],'title':'Atualizado','body':'exemplo','topic':'Docker'})
@@ -163,7 +172,7 @@ class IntegrationTests(unittest.TestCase):
    self.request('/api/study', {'subtopic':'Word 2024', 'studied':True})
    server.assistant_sources('edital', 'Kubernetes')
    server.assistant_sources('tecnico', 'Dockerfile')
-  self.assertEqual(seen, {'real_questions.json','basics.json','basic_topics.json','specific.json','knowledge.json'})
+  self.assertEqual(seen, {'real_questions.json','basics.json','basic_topics.json','specific.json','knowledge.json','question_goals.json'})
   self.request('/api/study', {'subtopic':'Word 2024', 'studied':False})
  def test_f_duplicate_normalization(self):
   c=server.db(); q=c.execute('select prompt,options from questions limit 1').fetchone()

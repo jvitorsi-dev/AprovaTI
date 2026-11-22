@@ -139,16 +139,17 @@ def question_structurally_valid(q):
 
 def audit_questions(c):
  counts={'definitivo':0,'preliminar':0,'anulada':0,'não confirmado':0,'revisão editorial pendente':0,'editorial validada':0,'outros':0}
- invalid=0; eligible=0
- for q in c.execute('select prompt,options,answer,kind,board,source,year,origin,role,explanation,answer_status,answer_status_source from questions'):
+ invalid=0; eligible=0; subtopics={}
+ for q in c.execute('select topic,subtopic,prompt,options,answer,kind,board,source,year,origin,role,explanation,answer_status,answer_status_source from questions'):
   status=q['answer_status'] or ('não confirmado' if (q['kind'] or '').startswith('REAL') else 'revisão editorial pendente')
   # Um estado definitivo sem referência explícita nunca é considerado confirmado.
   if status=='definitivo' and not (q['answer_status_source'] or '').startswith('https://'): status='não confirmado'
   counts[status if status in counts else 'outros']+=1
   valid=question_structurally_valid(q)
   if not valid: invalid+=1
-  if valid and status!='anulada': eligible+=1
- return {'status':counts,'estruturalmente_invalidas':invalid,'estruturalmente_validas_nao_anuladas':eligible,'duplicatas_auditadas':False}
+  if valid and status!='anulada':
+   eligible+=1; key=(q['topic'],q['subtopic']); subtopics[key]=subtopics.get(key,0)+1
+ return {'status':counts,'estruturalmente_invalidas':invalid,'estruturalmente_validas_nao_anuladas':eligible,'duplicatas_auditadas':False,'por_subtema':[{'topic':t,'subtopic':s,'n':n} for (t,s),n in subtopics.items()]}
 
 def statistics(c):
  qs=c.execute('select kind,count(*) n from questions group by kind').fetchall(); a=c.execute('select count(*) n, sum(case when a.choice=q.answer then 1 else 0 end) correct from answers a join questions q on q.id=a.question_id join exams e on e.id=a.exam_id where e.finished is not null and a.choice is not null').fetchone(); return {'total':sum(x['n'] for x in qs),'kinds':{x['kind']:x['n'] for x in qs},'answered':a['n'],'correct':a['correct'] or 0}
@@ -159,7 +160,7 @@ class Handler(BaseHTTPRequestHandler):
   u=urlparse(self.path); c=db()
   try:
    if u.path=='/api/data':
-    basics=json.loads((ROOT/'data/basics.json').read_text(encoding='utf-8')); self.send({'topics':TOPICS,'basics':basics,'basic_topics':json.loads((ROOT/'data/basic_topics.json').read_text(encoding='utf-8')),'studied':rows(c.execute('select subtopic,studied_at from study_progress')),'specific':json.loads((ROOT/'data/specific.json').read_text(encoding='utf-8')),'materials':MATERIALS,'stats':statistics(c),'history':rows(c.execute('select e.*,count(a.question_id) total,sum(case when a.choice=q.answer then 1 else 0 end) correct from exams e join answers a on a.exam_id=e.id join questions q on q.id=a.question_id where e.finished is not null group by e.id order by e.id desc limit 10')),'counts':rows(c.execute('select subtopic,count(*) n from questions group by subtopic')),'question_audit':audit_questions(c),'question_inventory':rows(c.execute("select topic,subtopic,kind,coalesce(board,'Não informada') board,count(*) n from questions group by topic,subtopic,kind,board order by topic,subtopic,kind,board"))}); return
+    basics=json.loads((ROOT/'data/basics.json').read_text(encoding='utf-8')); self.send({'topics':TOPICS,'basics':basics,'basic_topics':json.loads((ROOT/'data/basic_topics.json').read_text(encoding='utf-8')),'studied':rows(c.execute('select subtopic,studied_at from study_progress')),'specific':json.loads((ROOT/'data/specific.json').read_text(encoding='utf-8')),'materials':MATERIALS,'stats':statistics(c),'history':rows(c.execute('select e.*,count(a.question_id) total,sum(case when a.choice=q.answer then 1 else 0 end) correct from exams e join answers a on a.exam_id=e.id join questions q on q.id=a.question_id where e.finished is not null group by e.id order by e.id desc limit 10')),'counts':rows(c.execute('select subtopic,count(*) n from questions group by subtopic')),'question_audit':audit_questions(c),'question_goals':json.loads((ROOT/'data/question_goals.json').read_text(encoding='utf-8')),'question_inventory':rows(c.execute("select topic,subtopic,kind,coalesce(board,'Não informada') board,count(*) n from questions group by topic,subtopic,kind,board order by topic,subtopic,kind,board"))}); return
    if u.path=='/api/assistant/history':
     self.send(rows(c.execute('select * from conversations order by id desc limit 30'))); return
    if u.path=='/api/exams/active':

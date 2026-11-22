@@ -1,0 +1,466 @@
+[
+  {
+    "disciplina": "Língua Portuguesa",
+    "tema": "—",
+    "grupo": "Ortografia e crase",
+    "subtemas": [
+      "Ortografia e acentuação",
+      "Emprego do sinal indicativo de crase"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Língua Portuguesa",
+    "tema": "—",
+    "grupo": "Leitura, sentido e discurso",
+    "subtemas": [
+      "Compreensão e interpretação de textos",
+      "Relação do texto com seu contexto histórico",
+      "Denotação e conotação",
+      "Discurso direto, indireto e indireto livre",
+      "Intertextualidade",
+      "Figuras de linguagem"
+    ],
+    "meta": 40
+  },
+  {
+    "disciplina": "Língua Portuguesa",
+    "tema": "—",
+    "grupo": "Morfossintaxe e vocabulário",
+    "subtemas": [
+      "Morfossintaxe",
+      "Formação de palavras",
+      "Sinonímia e antonímia"
+    ],
+    "meta": 40
+  },
+  {
+    "disciplina": "Língua Portuguesa",
+    "tema": "—",
+    "grupo": "Pontuação e pronomes",
+    "subtemas": [
+      "Pontuação",
+      "Pronomes"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Língua Portuguesa",
+    "tema": "—",
+    "grupo": "Concordância e verbos",
+    "subtemas": [
+      "Concordância nominal e verbal",
+      "Flexão nominal e verbal",
+      "Vozes do verbo",
+      "Tempos e modos verbais"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Língua Portuguesa",
+    "tema": "—",
+    "grupo": "Regência e construção de períodos",
+    "subtemas": [
+      "Regência nominal e verbal",
+      "Coordenação e subordinação",
+      "Conectivos",
+      "Redação e transformação de estruturas"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Raciocínio Lógico",
+    "tema": "—",
+    "grupo": "Relações e raciocínio",
+    "subtemas": [
+      "Estrutura lógica de relações arbitrárias",
+      "Raciocínio verbal",
+      "Raciocínio matemático",
+      "Raciocínio sequencial"
+    ],
+    "meta": 40
+  },
+  {
+    "disciplina": "Raciocínio Lógico",
+    "tema": "—",
+    "grupo": "Orientação e conclusões",
+    "subtemas": [
+      "Orientação espacial e temporal",
+      "Formação de conceitos",
+      "Discriminação de elementos",
+      "Hipóteses e conclusões"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Informática",
+    "tema": "—",
+    "grupo": "Fundamentos e Windows",
+    "subtemas": [
+      "Conceitos básicos, hardware e software",
+      "Windows 11 e gerenciamento de arquivos"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Informática",
+    "tema": "—",
+    "grupo": "Aplicativos Office",
+    "subtemas": [
+      "Word 2024",
+      "Excel 2024",
+      "PowerPoint 2024"
+    ],
+    "meta": 40
+  },
+  {
+    "disciplina": "Informática",
+    "tema": "—",
+    "grupo": "Internet, nuvem e segurança",
+    "subtemas": [
+      "Navegadores de internet",
+      "Outlook 2024",
+      "Armazenamento em nuvem",
+      "Teams e Google Meet",
+      "Segurança da informação e LGPD",
+      "Inteligência Artificial no trabalho"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Noções De Administração Pública",
+    "tema": "—",
+    "grupo": "Organizações e administração pública",
+    "subtemas": [
+      "Organizações formais e departamentalização",
+      "Teorias das organizações",
+      "Gestão pública e privada",
+      "Princípios da Administração Pública"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Noções De Administração Pública",
+    "tema": "—",
+    "grupo": "Gestão e desempenho",
+    "subtemas": [
+      "Gestão de resultados em serviços públicos",
+      "Comunicação e redes organizacionais",
+      "Gestão e avaliação de desempenho",
+      "Processo organizacional"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Noções De Administração Pública",
+    "tema": "—",
+    "grupo": "Planejamento e pessoas",
+    "subtemas": [
+      "Planejamento estratégico, tático e operacional",
+      "Gestão de pessoas"
+    ],
+    "meta": 40
+  },
+  {
+    "disciplina": "Noções De Administração Pública",
+    "tema": "—",
+    "grupo": "Processos, projetos e liderança",
+    "subtemas": [
+      "Gestão por processos",
+      "Gestão por projetos",
+      "Gestão de contratos",
+      "Gestão da qualidade",
+      "Motivação",
+      "Liderança",
+      "Tipos de decisão e processo decisório"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "Linguagens e Técnicas de Programação",
+    "grupo": "Algoritmos e estruturas de dados",
+    "subtemas": [
+      "Tipos e representações de dados numéricos",
+      "Lógica de programação",
+      "Algoritmos e estruturas de dados",
+      "Complexidade de algoritmos",
+      "Listas e pilhas",
+      "Vetores e matrizes",
+      "Árvores e árvores balanceadas",
+      "Métodos de ordenação",
+      "Pesquisa e hashing"
+    ],
+    "meta": 80
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "Linguagens e Técnicas de Programação",
+    "grupo": "Programação orientada a objetos",
+    "subtemas": [
+      "Orientação a objetos",
+      "Classes e objetos",
+      "Herança e polimorfismo",
+      "Encapsulamento"
+    ],
+    "meta": 40
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "Linguagens e Técnicas de Programação",
+    "grupo": "Plataformas e fundamentos .NET",
+    "subtemas": [
+      ".NET, PHP, Python e Java",
+      "Plataforma .NET",
+      "Tipos e estruturas de dados .NET",
+      "Variáveis e enumerações .NET",
+      "Operações e expressões .NET"
+    ],
+    "meta": 40
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "Linguagens e Técnicas de Programação",
+    "grupo": "Controle, abstrações e exceções .NET",
+    "subtemas": [
+      "Instruções de controle .NET",
+      "Interfaces e classes abstratas .NET",
+      "Pacotes e exceções .NET"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "Linguagens e Técnicas de Programação",
+    "grupo": "Coleções, atributos e concorrência .NET",
+    "subtemas": [
+      "Coleções e tipos genéricos .NET",
+      "Attributes .NET",
+      "Sincronização e multithreading .NET"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "Linguagens e Técnicas de Programação",
+    "grupo": "Ambientes e Jakarta EE",
+    "subtemas": [
+      "IDEs e ambientes de desenvolvimento",
+      "Jakarta EE"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "Linguagens e Técnicas de Programação",
+    "grupo": "HTML, CSS e JavaScript",
+    "subtemas": [
+      "HTML, CSS e JavaScript"
+    ],
+    "meta": 40
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "Serviços Web",
+    "grupo": "REST e JSON",
+    "subtemas": [
+      "API REST",
+      "JSON"
+    ],
+    "meta": 40
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "Serviços Web",
+    "grupo": "XML e microsserviços",
+    "subtemas": [
+      "XML",
+      "Microsserviços"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "Bancos de Dados",
+    "grupo": "Conceitos e modelagem de dados",
+    "subtemas": [
+      "Bancos relacionais e multidimensionais",
+      "Modelagem conceitual, lógica e relacional"
+    ],
+    "meta": 40
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "Bancos de Dados",
+    "grupo": "SQL e programação em banco",
+    "subtemas": [
+      "SQL ANSI/ISO",
+      "Triggers e stored procedures"
+    ],
+    "meta": 80
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "Bancos de Dados",
+    "grupo": "Dados analíticos",
+    "subtemas": [
+      "Data Warehouse",
+      "Data Mining",
+      "Data Lake",
+      "Business Intelligence"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "Bancos de Dados",
+    "grupo": "Análise de Pontos de Função",
+    "subtemas": [
+      "Análise de Pontos de Função"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "Metodologias de Desenvolvimento de Sistemas",
+    "grupo": "Metodologias de desenvolvimento",
+    "subtemas": [
+      "Metodologias estruturadas",
+      "Métodos ágeis",
+      "RUP"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "Metodologias de Desenvolvimento de Sistemas",
+    "grupo": "UML, CASE e modelos",
+    "subtemas": [
+      "UML 2.5.1",
+      "Ferramentas CASE",
+      "Modelo de objetos e modelo relacional"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "Metodologias de Desenvolvimento de Sistemas",
+    "grupo": "Governança e qualidade",
+    "subtemas": [
+      "Governança de Dados",
+      "Qualidade de software"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "Metodologias de Desenvolvimento de Sistemas",
+    "grupo": "Testes, padrões e segurança",
+    "subtemas": [
+      "Testes de software",
+      "Padrões de Projeto",
+      "Segurança no desenvolvimento",
+      "Integração de aplicações e objetos distribuídos"
+    ],
+    "meta": 40
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "Infraestrutura e Redes",
+    "grupo": "Modelo OSI e TCP/IP",
+    "subtemas": [
+      "Modelo OSI",
+      "TCP/IP"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "Infraestrutura e Redes",
+    "grupo": "IP e HTTP",
+    "subtemas": [
+      "IPv4 e IPv6",
+      "HTTP e HTTPS"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "Acessibilidade e Usabilidade",
+    "grupo": "Acessibilidade e tecnologias assistivas",
+    "subtemas": [
+      "Conceitos e padrões",
+      "Tecnologias assistivas"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "Inteligência Artificial",
+    "grupo": "IA generativa e RAG",
+    "subtemas": [
+      "IA generativa",
+      "RAG"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "Inteligência Artificial",
+    "grupo": "Dados vetoriais e prompts",
+    "subtemas": [
+      "Bancos de dados vetoriais",
+      "Engenharia de Prompt"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "DevOps",
+    "grupo": "Integração contínua e Git",
+    "subtemas": [
+      "CI/CD",
+      "Git e controle de versões"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "DevOps",
+    "grupo": "Contêineres e Kubernetes",
+    "subtemas": [
+      "Docker",
+      "Kubernetes"
+    ],
+    "meta": 40
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "Gestão de TI",
+    "grupo": "Projetos e governança",
+    "subtemas": [
+      "PMBOK 8ª edição",
+      "Governança de TI"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "Gestão de TI",
+    "grupo": "COBIT e ITIL",
+    "subtemas": [
+      "COBIT 2019",
+      "ITIL Version 5"
+    ],
+    "meta": 20
+  },
+  {
+    "disciplina": "Conhecimentos Específicos",
+    "tema": "Inglês Técnico",
+    "grupo": "Inglês Técnico",
+    "subtemas": [
+      "Inglês Técnico"
+    ],
+    "meta": 20
+  }
+]

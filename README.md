@@ -9,7 +9,7 @@ python3 server.py
 
 O servidor escuta em `0.0.0.0` para suporte à prévia. Use somente em ambiente privado: não possui autenticação nem proteção para exposição pública. Dados persistem em `data/study.db` (SQLite), criado automaticamente. Faça backup desse arquivo; ele não é versionado. O PDF anexado está em `public/edital.pdf`.
 
-A tela **Acervo** apresenta as contagens reais do SQLite por disciplina, tema, subtema, tipo e banca, incluindo assuntos ainda sem questões. O painel indica o estado dos gabaritos e uma tabela de subtemas. A referência inicial de 1.200 é incompatível com o mínimo de 20 para cada um dos 128 subtemas atuais (mínimo 2.560); metas individuais aguardam decisão.
+A tela **Acervo** apresenta as contagens reais do SQLite por disciplina, tema, subtema, tipo e banca, incluindo assuntos ainda sem questões. O painel indica o estado dos gabaritos e uma tabela de subtemas. Por decisão do usuário, os 128 subtemas estão reunidos em 42 grupos de metas compartilhadas, que somam 1.200, sendo 800 para específicos. A meta é do grupo, não um mínimo individual de cada subtema; os totais repetidos nas linhas de subtemas não devem ser somados.
 
 ## Escopo e limitações
 
